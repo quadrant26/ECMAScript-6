@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>let 命令</title>
+</head>
+<body>
+<script>
+
+var tmp = 4;
+if(true){
+	// TDZ
+	//tmp = 'abc'; // Uncaught ReferenceError:
+	//console.log(tmp);  // Uncaught ReferenceError:
+
+	let tmp;
+	console.log(tmp); // undefined
+
+	tmp = 123;
+	console.log(tmp); // 123
+
+};
+
+console.log(typeof x); // Uncaught ReferenceError:
+let x;
+
+/**
+ * [foo description]
+ * 
+ */
+function foo(x = y, y = 2){
+	return [x,y];
+}
+// 报错，参数y 还没有声明的时候就赋值给 x
+foo();
+
+//暂时性死区的本质就是，只要一进入当前作用域，所要使用的变量就已经存在了，但是不可获取，只有等到声明变量的那一行代码出现，才可以获取和使用该变量。
+//
+//
+
+// 报错 Uncaught SyntaxError: Unexpected token
+function (){
+	let a = 1;
+	var a = 1;
+}
+
+function (arg){
+	let arg; // 报错
+}
+
+function (){
+	{
+		let arg; // 不报错
+	} 
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>let 命令</title>
+</head>
+<body>
+<script>
+
+const PI = "3.14159";
+console.log(PI);
+
+PI = 3; // Uncaught TypeError: Assignment to constant variable.
+
+//const声明的变量不得改变值，这意味着，const一旦声明变量，就必须立即初始化，不能留到以后赋值
+//这行命令在常规模式下不报错，但foo以后也没法重新赋值了。
+const foo;
+foo = 1;
+console.log(foo);  // undefined
+
+
+const命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置后面使用。
+
+if (true) {
+  console.log(MAX); // ReferenceError
+  const MAX = 5;
+}
+
+// 对于复合类型的变量，变量名不指向数据，而是指向数据所在的地址。const命令只是保证变量名指向的地址不变，并不保证该地址的数据不变
+const foo = {};
+foo.prop = 123;
+
+console.log(foo.prop)
+// 123
+
+foo = {}; // TypeError: "foo" is read-only
+//常量foo储存的是一个地址，这个地址指向一个对象。不可变的只是这个地址，即不能把foo指向另一个地址，但对象本身是可变的，所以依然可以为其添加新属性。
+
+</script>
+</body>
+</html>
