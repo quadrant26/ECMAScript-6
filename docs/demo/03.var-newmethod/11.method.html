@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>字符串的解构赋值</title>
+</head>
+<body>
+<script>
+// 用法
+//1. 交换值
+[x, y] = [y, x];
+
+//2. 函数返回多个值
+function example(){
+    return [1, 2, 3];
+}
+var [a, b, c] = example();
+var {foo, bar} = example(); // 返回变量的时候
+
+//3. 函数参数的定义
+function f([x,y,z]){...}
+f([1,2,3])
+function f({x,y,z}){...}
+f({x:1, y:2, z:4})
+
+//4. 提取json
+var json = {
+    a : 1,
+    b : 2,
+    c : 3
+}
+let {a, b, c} = json;
+
+//5. 函数参数的默认值
+jQuery.ajax = function (url, {
+    async = true,
+    beforeSend = function () {},
+    cache = true,
+    complete = function () {},
+    crossDomain = false,
+    global = true,
+    // ... more config
+}) {
+    // ... do stuff
+};
+
+//6. 遍历 Map
+var map = new Map();
+map.set("first", "hello");
+map.set("last", "world");
+
+for(let [key, value] of map){
+    console.log(key + 'is' + value);
+}
+// 只获取键名
+for(let [key, value] of map){
+    console.log(key + 'is' + value);
+}
+// 只获取值
+for(let [key, value] of map){
+    console.log(key + 'is' + value);
+}
+
+//7. 模块的指定方法
+const {sourcename1, sourcename2} = require("module name");
+
+</script>
+</body>
+</html>
