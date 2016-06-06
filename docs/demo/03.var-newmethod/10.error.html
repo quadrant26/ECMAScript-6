@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串的解构赋值</title>
+</head>
+<body>
+<script>
+// 圆括号报错
+// 1. 变量声明语句中不能带有圆括号
+var [(a)] = [1];
+var {x : (c)} = {};
+var ({x : c}) = {};
+var {(x : c)} = {};
+var {(x) : c} = {};
+
+// 2. 函数参数中，模式不能带有圆括号
+function a([(a)]){
+    return a;
+}
+
+// 3. 赋值语句中，不能将整个模式，或嵌套模式中的一层，放在圆括号之中。
+({ p: a }) = { p: 42 };
+([a]) = [5];
+
+[({ p: a }), { x: c }] = [{}, {}];
+
+// 可以使用圆括号
+[(b)] = [3]; // 正确
+({ p: (d) } = {}); // 正确
+[(parseInt.prop)] = [3]; // 正确
+
+</script>
+</body>
+</html>
