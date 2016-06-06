@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变量的赋值方式</title>
+</head>
+<body>
+<script>
+//1. 数组解构赋值
+var [a, b, c] = [1, 2, 3];
+console.log(a);
+console.log(b);
+console.log(c);
+
+// 2. 需要遵循特定的模式
+let [foo, [[bar], baz]] = [1, [[2], 3]];
+console.log(foo); // 1
+console.log(bar); // 2
+console.log(baz); // 3
+
+let [ , , third] = [1, 2, 3];
+console.log(third); // 3
+
+let [head, ...tail] = [1, 2, 3, 4];
+console.log(head); // 1
+console.log(tail); // array [2, 3, 4]
+
+// 3. 解构不成功返回 undefined
+let [foo2] = [];
+console.log(foo2);  // undefined
+let [bar3, foo3] = [1];
+console.log(bar3); // 1
+console.log(foo3); // undefined
+
+
+
+//4. 不完全解构
+var [a, [b], c] = [1, [2, 3], 4];
+/*a // 1
+b // 2
+c // 4
+*/
+var [x, y] = [1, 2, 3];
+/*
+x // 1
+y // 2
+*/
+
+</script>
+</body>
+</html>
