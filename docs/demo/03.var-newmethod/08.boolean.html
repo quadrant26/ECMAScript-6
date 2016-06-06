@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串的解构赋值</title>
+</head>
+<body>
+<script>
+// boolean
+let {toString : s} = 123;
+console.log(s === Number.prototype.toString); // true
+
+let {toString: s1} = true;
+console.log(s1 === Boolean.prototype.toString );// true
+
+
+let { prop: x } = undefined; // TypeError
+let { prop: y } = null; // TypeError
+
+</script>
+</body>
+</html>
