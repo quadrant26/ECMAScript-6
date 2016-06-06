@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变量的赋值方式</title>
+</head>
+<body>
+<script>
+    
+//默认值
+var [a = true] = [];
+console.log(a); // true
+
+var [x, y = 'b'] = ['a'];
+console.log(x,y); // a, b
+
+var [x, y = 'b'] = ['a', undefined];
+console.log(x,y); // a, b
+
+// ES6内部使用严格相等运算符（===），判断一个位置是否有值。所以，如果一个数组成员不严格等于undefined，默认值是不会生效的。
+var [x = 1] = [undefined];
+console.log(x);  // 1
+
+var [x = 1] = [null];
+console.log(x); // null   因为null不严格等于undefined
+
+// 对象设置默认值
+//如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到的时候，才会求值。
+function aaa(){
+    console.log("aaa");
+}
+let [x1 = aaa()] = [1];
+console.log(x1); // 1 因为x能取到值，所以函数f根本不会执行。
+
+let x2;
+if( [1][0] === undefined ){
+    x2 = aaa();
+}else{
+    x2 = [1][0];
+}
+console.log(x2); // 1
+
+let [x3 = 1, y3 = x3] = [];
+console.log(x3,y3);  // 1, 1
+let [x4 = 1, y4 = x4 ] = [2];
+console.log(x4,y4);
+let [x5 = 1, y5 = x5] = [1, 2];
+console.log(x5,y5);  // 1, 2
+let [x6 = y6, y6 = 1 ] = [];   // ReferenceError 因为 y6 没有声明
+
+
+</script>
+</body>
+</html>
