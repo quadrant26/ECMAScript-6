@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象的解构赋值</title>
+</head>
+<body>
+<script>
+    
+// 嵌套模式
+var obj = {
+    p : [
+        "hello",
+        {
+            y : "world"
+        }
+    ]
+};
+// 这时p是模式，不是变量，因此不会被赋值。
+var {p : [x, {y}]} = obj;
+console.log(x,y); // x = hello, y = world
+
+
+var node = {
+    loc : {
+        start : {
+            line : 1,
+            column : 5
+        }
+    }
+}
+var { loc : {start : {line, column}} } = node;
+console.log(line, column); // 1 5
+//console.log(start); // error start is not defined
+//console.log(loc); // error loc is not defined
+// 只有line是变量，loc和start都是模式，不会被赋值。
+
+var {x = 3} = {};
+console.log(x); // x = 3;
+var {x, y = 5} = {x : 1};
+//x = 1, y = 5
+
+// 属性等于null，就不严格相等于undefined，导致默认值不会生效。
+var { x = 3} = {x : undefined};
+console.log(x); // 3
+var { x = 3} = {x : null};
+console.log(x); // null;
+
+
+</script>
+</body>
+</html>
