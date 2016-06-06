@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象的解构赋值</title>
+</head>
+<body>
+<script>
+    
+// 解构失败，变量的值等于undefine
+var {foo} = {bar : "aaa"};
+console.log(foo); // undefined 
+
+// 嵌套对象 子对象所在的父属性不存在，那么将会报错
+// 因为foo这时等于undefined，再取子属性就会报错
+//var {foo : {bar}} = {bar : "error"};
+//console.log(bar);
+
+// 已经声明的对象进行解构赋值
+/**
+ * error
+ * let foo;
+ * {foo} = {foo : 'aaa'};  SyntaxError: syntax error
+ * 
+ *  因为JavaScript引擎会将{x}理解成一个代码块，从而发生语法错误
+ *  只有不将大括号写在行首，避免JavaScript将其解释为代码块，才能解决这个问题。
+ */
+let foo1;
+({foo1} = {foo1 : 'aaa'})
+console.log(foo1);
+
+// 解构赋值允许，等号左边的模式之中，不放置任何变量名。
+({} = [true, false]);
+({} = "abc");
+({} = []);
+
+//对象的解构赋值，可以很方便地将现有对象的方法，赋值到某个变量。
+let { log, sin, cos } = Math;
+console.log( sin(30) );
+
+
+</script>
+</body>
+</html>
