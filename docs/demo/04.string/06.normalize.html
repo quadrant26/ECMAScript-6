@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串扩展 -codePointAt</title>
+</head>
+<body>
+<script>
+// normalize
+console.log('\u01D1' === '\u004F\u030C'); //false
+console.log('\u01D1'.length); //false
+console.log('\u004F\u030C'.length); //false
+
+// normalize 实列化
+console.log('\u01D1'.normalize() === '\u004F\u030C'.normalize()); //true
+
+
+console.log( '\u004F\u030C'.normalize('NFC').length );
+console.log( '\u004F\u030C'.normalize('NFD').length );
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
