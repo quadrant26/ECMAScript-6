@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串扩展 -String.raw()</title>
+</head>
+<body>
+<div id="result"></div>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+console.log(String.raw`Hi\n${2+3}!`);
+console.log(String.raw`Hi\u000A!`);
+
+String.raw = function (strings, ...values){
+    var output = '';
+    for( var index = 0; index < values.length; index++){
+        output += strings.raw[index] + values[index];
+    };
+    output += strings.raw[index];
+    return output;
+};
+
+console.log( String.raw({ raw: 'test' }, 0, 1, 2));
+
+
+
+</script>
+</body>
+</html>
