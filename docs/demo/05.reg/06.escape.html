@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>正则表达式-- RegExp.escape()</title>
+</head>
+<body>
+<script>
+
+function escapeRegExp(str){
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+?\.\\\^\$\|]/, '\\$&');
+}
+
+let str = 'path/to/resourece.html?search=query';
+console.log(escapeRegExp(str))
+
+RegExp.escape = function (str){
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+?\.\\\^\$\|]/, '\\$&');
+};
+
+console.log(RegExp.escape('The Quick Brown Fox'));
+console.log(RegExp.escape('Buy it. use it. break it. fix it.'));
+console.log('(*.*)');
+
+console.log(escape('hi. how are you?'));
+
+</script>
+</body>
+</html>
