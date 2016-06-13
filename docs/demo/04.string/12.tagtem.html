@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串扩展 -标签模板</title>
+</head>
+<body>
+<div id="result"></div>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+//alert`123`;
+
+var a = 3;
+var b = 5;
+
+//tag(['Hello ', ' world ', ''], 15, 50);
+tag`hello ${a + b}, world ${a * b}`;
+
+function tag(stringArr, value1, value2){
+
+    console.log(stringArr[0]);
+    console.log(stringArr[1]);
+    console.log(stringArr[2]);
+    console.log(value1);
+    console.log(value2);
+
+    return 'ok';
+}
+
+var total = 30;
+var msg = passthru`The total is ${total} (${total*1.05} with tax)`;
+
+function passthru(literals){
+    var result = '';
+    var i = 0;
+
+    while( i < literals.length ){
+        result += literals[i++];
+        if( i < arguments.length ){
+            result += arguments[i];
+        }
+    };
+
+    return result;
+}
+
+console.log(msg);
+
+
+function passthru2(literals, ...values){
+    var output = "";
+    for(var index = 0; index < values.length; index++){
+        output += literals[index] + values[index];
+    };
+
+    output += literals[index];
+    return output;
+};
+var msg2 = passthru2`The total is ${total} (${total*1.05} with tax)`;
+console.log(msg2);
+
+
+var message = safer`<p>${sender} has sent you a message.</p>`;
+function safer(templateData){
+    var s = templateData[0];
+    for(var i = 0; i < arguments.length; i++){
+        var arg = String(arguments[i]);
+
+        s += arg.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gtl");
+
+        s += templateData[i];
+    };
+};
+
+
+function libraryHtml = hashTemplate`
+    <ul>
+        #for book in ${mybooks}
+        <li><i>#{book.title}</i>by #{book.author}</li>
+    </ul>
+`;
+
+</script>
+</body>
+</html>
