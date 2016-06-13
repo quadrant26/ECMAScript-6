@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>正则表达式-- RegExp.escape()</title>
+</head>
+<body>
+<script>
+
+// 先行断言
+console.log('xian', /\d+(?=%)/.exec('100% of US presidents have been male'));  // 100
+console.log('xian', /\d+(?!%)/.exec('that’s all 44 of them'));  // 44
+
+// 后行断言
+console.log('h', /(?<=\$)\d+/.exec('Benjamin Franklin is on the $100 bill'));
+console.log('h', /(?<!\$)\d+/.exec('it’s is worth about €90'));
+
+
+console.log(/(?<=(\d+)(\d+))$/.exec('1053'));  // ["", "1", "053"]
+console.log(/^(\d+)(\d+)$/.exec('1053') );// ["1053", "105", "3"])
+
+console.log(/(?<=(o)d\1)r/.exec('hodor'));  // null
+console.log(/(?<=\1d(o))r/.exec('hodor'));  // ["r", "o"]);
+</script>
+</body>
+</html>
