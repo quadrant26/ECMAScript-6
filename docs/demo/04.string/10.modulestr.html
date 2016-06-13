@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串扩展 -模板字符串</title>
+</head>
+<body>
+<div id="result"></div>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script>
+var basket = {
+    count : "2",
+    onSale : "where"
+};
+$("#result").append(
+    'There are <b>' + basket.count + '</b>' +
+    'items in your basket ,' +
+    '<em>' + basket.onSale + 
+    '</em> are on sale!'
+);
+
+$("#result").append(
+    `There are <b> ${basket.count} </b> items in your basket , <em> ${basket.onSale} </em> are on sale!`
+);
+
+// 模板字符串输出
+console.log(`${basket.count}`);
+
+function foo(){
+    return "hello world";
+};
+// 模板字符串调用函数
+console.log(`HI ${foo()}`);
+
+// 嵌套
+const tmpl = addrs => `
+    <table>
+        ${addrs.map(addrs=>`
+            <tr><td>${addrs.first}</td></tr>
+            <tr><td>${addrs.last}</td></tr>
+        `).join('')}
+    </table>
+`;
+const addrs = [
+    {first : '<jane>', last : 'Bond'},
+    {first : 'lars', last : '<Croft>'}
+];
+console.log(tmpl(addrs));
+
+
+// 
+let str = 'return ' + '`hello ${name}`';
+let func = new Function('name', str);
+console.log(func('java'));
+
+let str2 = '(name) => `hello ${name}`';
+let func2 = eval.call(null, str2);
+console.log(func2('php'));
+
+</script>
+</body>
+</html>
