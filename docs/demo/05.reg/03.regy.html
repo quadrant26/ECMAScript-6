@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>正则表达式-- y 修饰符</title>
+</head>
+<body>
+<script>
+
+var s = 'aaa_aa_a';
+var r1 = /a+/g;
+var r2 = /a+/y;
+
+console.log('g', r1.exec(s));
+console.log('y', r2.exec(s));
+
+console.log('g', r1.exec(s));
+console.log('y', r2.exec(s));
+
+var r = /a+_/y;
+console.log('y', r.exec(s));
+console.log('y', r.exec(s));
+
+
+// lastindex
+const REGEX = /a/g;
+// 指定位置为 2 开始搜索
+REGEX.lastIndex = 2;
+const match = REGEX.exec('xaya');
+console.log(match, match.index); // match.index = 3
+// 指定位置为 4 开始搜索
+REGEX.lastIndex = 4;
+console.log(REGEX.exec('xaxa')); // null
+
+// y lastIndex
+const REGEX2 = /a/y;
+// 指定位置为 2 开始搜索
+REGEX2.lastIndex = 2;
+console.log(REGEX2.exec('xaxa')) // 不是粘连，匹配失败 null
+// 指定位置为 3 开始搜索
+REGEX2.lastIndex = 3;
+const match2 = REGEX2.exec('xaxa')
+console.log(match2, match2.index, REGEX2.lastIndex) // 3号位置是粘连，匹配成功
+
+//进一步说，y修饰符号隐含了头部匹配的标志^。
+console.log(/b/y.exec('aba'));
+
+// y  split
+console.log('x##'.split(/#/y));  // 没有找到匹配
+console.log('##x'.split(/#/y));  // ["", "", "x"]
+
+//后续的分隔符只有紧跟前面的分隔符，才会被识别。
+
+console.log('#x#'.split(/#/y)); // [ '', 'x#' ]
+console.log( '##'.split(/#/y)); // ["", "", ""]
+
+
+// replace
+const REGEX3 = /a/gy;
+console.log('aaxa'.replace(REGEX3, '-'));  // '--xa' 最后一个a因为不是出现下一次匹配的头部，所以不会被替换。
+console.log('a1a2a3'.match(/a\d/y)); // ["a1"]
+console.log('a1a2a3'.match(/a\d/gy)); // ["a1", "a2", "a3"])
+
+// example 匹配词元
+const TOKEN_Y = /\s*(\+|[0-9]+)\s*/y;
+const TOKEN_G = /\s*(\+|[0-9]+)\s*/g;
+
+
+function tokenize(TOKEN_REG, str){
+    let result = [];
+    let match;
+    while(match == TOKEN_REG.exec(str)){
+        result.push(match[0]);
+    }
+    return result;
+}
+
+console.log(tokenize(TOKEN_Y, '3 + 4'));
+console.log(tokenize(TOKEN_G, '3 + 4'));
+console.log(tokenize(TOKEN_Y, '3x + 4'));
+console.log(tokenize(TOKEN_G, '3x + 4'));
+
+</script>
+</body>
+</html>
