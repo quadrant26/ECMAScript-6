@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>正则表达式-- source flags</title>
+</head>
+<body>
+<script>
+
+var s = 'aaa_aa_a';
+var r1 = /a+/g;
+var r2 = /a+/y;
+
+console.log(r1.source);  // 返回正则的内容
+console.log(r1.flags);   // 返回正则的修饰符
+
+</script>
+</body>
+</html>
