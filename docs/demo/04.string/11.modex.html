@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串扩展 -模板字符串</title>
+</head>
+<body>
+<div id="result"></div>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+var template = `
+    <ul>
+        <% for(var i = 0; i < data.supplies.length; i++){ %>
+            <li><%= data.supplies[i] %></li>
+        <% } %>
+    </ul>
+`;
+
+/*
+echo("<ul>");
+for(var i = 0; i < data.supplies.length; i++){
+    echo("<li>");
+    echo(data.supplies[i]);
+    echo("</li>");
+};
+echo("</ul>");
+
+*/
+function compile(template){
+    var evalExpr = /<%=(.+?)%>/g;
+    var expr = /<%([\s\S]+?)%>/g;
+
+    template = template
+        .replace(evalExpr, '') // ; \n  echo( $1 ); \n  echo(`')
+        .replace(expr, ''); // \n $1 \n  echo(`');
+
+    console.log(template);
+
+    template = 'echo(`' + template + '`);';
+
+    console.log(template);
+
+    var script =
+    `(function parse(data){
+        var output = "";
+
+        function echo(html){
+            output += html;
+        }
+
+        ${ template }
+
+        return output;
+    })`;
+    console.log(script);
+    return script;
+}
+
+var parse = eval(compile(template));
+$('#result').html( parse({ supplies: [ "broom", "mop", "cleaner" ] }));
+
+
+</script>
+</body>
+</html>
