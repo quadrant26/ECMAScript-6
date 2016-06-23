@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number.isFinite() Number.isNaN() </title>
+</head>
+<body>
+<script>
+
+// Number.isFinite()
+// Number.isFinite()用来检查一个数值是否非无穷（infinity）
+console.log(Number.isFinite(15));    // true
+console.log(Number.isFinite(0.8));  // true
+console.log(Number.isFinite(NaN));  //false
+console.log(Number.isFinite(Infinity)); // false
+console.log(Number.isFinite(-Infinity)); // false
+console.log(Number.isFinite('foo'));     // false   
+console.log(Number.isFinite('15'));     // false
+console.log(Number.isFinite(true));     // false
+
+(function (global){
+    var global_isFinite = global.isFinite;
+
+    Object.defineProperty(Number, 'isFinite', {
+        value : function isFinite(value){
+            return typeof value === 'number'  && global_isFinite(value);
+        },
+        configurable : true,
+        enumerable : true,
+        writable : true
+    });
+})(this);
+
+// Number.isNaN()
+// Number.isNaN()用来检查一个值是否为NaN
+console.log(Number.isNaN(NaN));     // false
+console.log(Number.isNaN(15));      // true
+console.log(Number.isNaN('15'));    // false
+console.log(Number.isNaN(true));      // false
+console.log(Number.isNaN(9/NaN));      // true
+console.log(Number.isNaN('true'/0));    // true
+console.log(Number.isNaN('true'/'true')); // true
+
+(function (global){
+    var global_isNaN = global.isNaN;
+
+    Object.defineProperty(Number, 'isNaN', {
+        value : function isNaN(value){
+            return typeof value === 'number' && global_isNaN(value);
+        },
+        configurable : true,
+        enumerable : false,
+        writable : true
+    });
+})(this);
+
+//
+console.log( isFinite );
+console.log( isFinite(25) );  // true
+console.log( isFinite("25")); // true
+console.log( Number.isFinite(25)); // true
+console.log( Number.isFinite("25")); // false
+
+console.log( isNaN(NaN)); // true
+console.log( isNaN("NaN")); // true
+console.log( Number.isNaN(NaN)); // true
+console.log( Number.isNaN("NaN")); // false
+
+
+</script>
+</body>
+</html>
