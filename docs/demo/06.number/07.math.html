@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Math </title>
+</head>
+<body>
+<script>
+
+// Math
+// Math.trunc()     用于去除一个数的小数部分，返回整数部分
+// 对于非数值，Math.trunc内部使用Number方法将其先转为数值。
+console.log(Math.trunc(3.2));           // 3
+console.log(Math.trunc(4.9));           // 4
+console.log(Math.trunc(-3.2));          // -3
+console.log(Math.trunc(-0.7367236));    // 0
+
+console.log(Math.trunc("2.12"));    // 2
+console.log(Math.trunc(null));      // 0
+console.log(Math.trunc(NaN));       // NaN
+console.log(Math.trunc('foo'));       // NaN
+console.log(Math.trunc());       // NaN
+
+Math.trunc = Math.trunc || function (x){
+    return x < 0 ? Math.ceil(x) : Math.flooe(x);
+}
+
+// Math.sign    用来判断一个数到底是正数、负数、还是零
+console.log(Math.sign(3));      // +1
+console.log(Math.sign(-3));      // -1
+console.log(Math.sign(0));      // 0
+console.log(Math.sign(-0));      // -0
+console.log(Math.sign('f'));      // NaN
+
+Math.sign = Math.sign || function (x){
+    x = +x;
+    if(x === 0 || isNaN(x)){
+        return x;
+    }
+    return x > 0 ? 1 : -1;
+}
+
+// Math.cbrt()  用于计算一个数的立方根
+console.log(Math.cbrt(1));          // 1
+console.log(Math.cbrt(0));          // 0
+console.log(Math.cbrt(-1));         // -1
+console.log(Math.cbrt(2));          // 1.259921049894873
+console.log(Math.cbrt('4'));          // 2
+console.log(Math.cbrt('f'));          // NaN
+
+Math.cbrt = Math.cbrt || function (x){
+    var y = Math.pow(Math.abs(x), 1/3);
+    return x < 0 ? -y : y;
+}
+
+// Math.clz32   使用32位二进制形式表示，Math.clz32方法返回一个数的32位无符号整数形式有多少个前导0
+console.log(Math.clz32(0));         //32
+console.log(Math.clz32(1));         //31
+console.log(Math.clz32(1000));         //22
+console.log(Math.clz32(0b01000000000000000000000000000000));         //1
+console.log(Math.clz32(0b00100000000000000000000000000000));         //2
+// 左移运算符（<<）与Math.clz32方法直接相关
+console.log(Math.clz32(1 << 1));
+console.log(Math.clz32(1 << 2));
+console.log(Math.clz32(1 << 29));
+
+// Math.imul()  返回两个数以32位带符号整数形式相乘的结果，返回的也是一个32位的带符号整数
+console.log(Math.imul(2, 4));       // 8
+console.log(Math.imul(-1, 8));      // -8
+console.log(Math.imul(-2, -2));     // 4
+
+// Math.fround()  一个数的单精度浮点数形式
+console.log(Math.fround(0));        // 0
+console.log(Math.fround(1));        // 1
+console.log(Math.fround(1.337));    // 1.3370000123977661
+console.log(Math.fround(1.5));      // 1.5
+console.log(Math.fround(NaN));      // NaN
+
+Math.fround = Math.fround || function (x){
+    return new Float32Array([x])[0];
+}
+
+// Math.hypot()     所有参数的平方和的平方根
+// 只要有一个参数无法转为数值，就会返回NaN。
+console.log(Math.hypot(3, 4));   5
+console.log(Math.hypot(3, 4, 5));     // 7.0710678118654755
+console.log(Math.hypot());            // 0
+console.log(Math.hypot(NaN));         // NaN
+console.log(Math.hypot(3, 4, 'foo')); // NaN
+console.log(Math.hypot(3, 4, '5'));   // 7.0710678118654755
+console.log(Math.hypot(-3));          // 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
