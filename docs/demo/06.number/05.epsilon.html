@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number.EPSILON() </title>
+</head>
+<body>
+<script>
+
+// Number.EPSILON
+console.log(Number.EPSILON);
+
+console.log(0.1 + 0.2);
+console.log(0.1 + 0.2 - 0.3);
+console.log(5.551115123125783e-17.toFixed(20));
+console.log(5.551115123125783e-17 < Number.EPSILON);
+
+function withInErrorMargin(left, right){
+    return Math.abs(left-right) < Number.EPSILON;
+};
+
+console.log(withInErrorMargin(0.1 + 0.2, 0.3));
+console.log(withInErrorMargin(0.2 + 0.2, 0.3));
+console.log();
+</script>
+</body>
+</html>
