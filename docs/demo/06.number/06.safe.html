@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>安全整数 - Number.isSafeInteger() </title>
+</head>
+<body>
+<script>
+
+// 可以表示 2^53 次方  超过这个就精确了
+console.log(Math.pow(2, 53));
+console.log(Math.pow(2, 53) === Math.pow(2, 53) + 1); // true
+
+// Number.MAX_SAFE_INTEGER Number.MIN_SAFE_INTEGER
+console.log(Number.MAX_SAFE_INTEGER);                       // 9007199254740991 
+console.log(Number.MAX_SAFE_INTEGER === Math.pow(2, 53)-1); // true
+console.log(Number.MIN_SAFE_INTEGER);                       // -9007199254740991
+console.log(Number.MIN_SAFE_INTEGER === -9007199254740991); // true
+
+// Number.isSafeInteger
+console.log(Number.isSafeInteger('a'));         // false
+console.log(Number.isSafeInteger(null));        // false
+console.log(Number.isSafeInteger(NaN));         // false
+console.log(Number.isSafeInteger(Infinity));    // false    
+console.log(Number.isSafeInteger(-Infinity));   // false
+
+console.log(Number.isSafeInteger(3));           // true
+console.log(Number.isSafeInteger(1.2));         // true
+console.log(Number.isSafeInteger(9007199254740990));    // true
+console.log(Number.isSafeInteger(9007199254740992));    // false
+ 
+console.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER));         // true
+console.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER + 1));     // false
+console.log(Number.isSafeInteger(Number.MIN_SAFE_INTEGER));         // true
+console.log(Number.isSafeInteger(Number.MIN_SAFE_INTEGER - 1));     // fasle
+
+
+Number.isSafeInteger = function (n){
+    return ( typeof n === 'number' && Math.round(n) === n && Number.MIN_SAFE_INTEGER <= n && n <= Number.MAX_SAFE_INTEGER);
+}
+
+console.log(9007199254740993 === 9007199254740992);
+
+
+function trusty(left, right, result){
+    if(
+        Number.isSafeInteger(left) &&
+        Number.isSafeInteger(right) &&
+        Number.isSafeInteger(result)
+    ){
+        return result;
+    }
+
+    throw new RangeError('Operation cannot be trusted!');
+}
+
+
+console.log( trusty(9007199254740993, 990, 9007199254740993 - 990) );
+// RangeError: Operation cannot be trusted!
+
+console.log( trusty(1, 2, 3) ) // 3
+</script>
+</body>
+</html>
