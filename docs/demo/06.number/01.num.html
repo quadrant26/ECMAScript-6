@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number extends methods</title>
+</head>
+<body>
+<script>
+
+console.log( 0b111110111 === 503 );  // 二进制表示
+console.log(0o767 === 503);     // 八进制表示
+
+(function (){
+    console.log(0o11 === 011);
+})();
+
+(function (){
+    // 在严格模式之中，八进制就不再允许使用前缀0表示，
+    //"use strict";
+    console.log(0o11 === 011);
+})()
+
+console.log(Number('0o1223'), Number('0b111010101'));
+
+</script>
+</body>
+</html>
