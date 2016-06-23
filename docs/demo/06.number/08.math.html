@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Math </title>
+</head>
+<body>
+<script>
+
+// Math 对数方法
+// Math.expm1()     返回ex - 1，即Math.exp(x) - 1
+console.log(Math.expm1(1));  // 1.718281828459045
+console.log(Math.expm1(0));  // 0
+console.log(Math.expm1(-1));  // -1.718281828459045
+
+Math.expm1 = Math.expm1 || function (x){
+    return Math.exp(x) -1
+}
+
+// Math.log1p(x)    方法返回1 + x的自然对数，即Math.log(1 + x)。如果x小于-1，返回NaN。
+console.log(Math.log1p(-1));  // -Infinity
+console.log(Math.log1p(1));  //  0.6931471805599453
+console.log(Math.log1p(0));  //  0
+console.log(Math.log1p(2));  //  NaN
+
+Math.log1p = Math.log1p || function (x){
+    return Math.log(1 + x);
+}
+
+// Math.log10()   返回以10为底的x的对数。如果x小于0，则返回NaN
+console.log(Math.log10(2));      // 0.3010299956639812
+console.log(Math.log10(1));      // 0
+console.log(Math.log10(0));      // -Infinity
+console.log(Math.log10(-2));     // NaN
+console.log(Math.log10(100000)); // 5
+
+Math.log10 = Math.log10 || function (x){
+    return Math.log(x) / Math.LN10;
+}
+
+// Math.log2
+console.log(Math.log2(3));       // 1.584962500721156
+console.log(Math.log2(2));       // 1
+console.log(Math.log2(1));       // 0
+console.log(Math.log2(0));       // -Infinity
+console.log(Math.log2(-2));      // NaN
+console.log(Math.log2(1024));    // 10
+console.log(Math.log2(1 << 29)); // 2
+
+Math.log2 = Math.log2 || function(x) {
+    return Math.log(x) / Math.LN2;
+};
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
