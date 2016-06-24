@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> entries() keys() values() </title>
+</head>
+<body>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<script>
+
+// includes()
+console.log([1,2,3].includes(2));       // true
+console.log([1,2,NaN].includes(NaN));   // false
+
+console.log([1, 2, 3].includes(3, 3));  // false
+console.log([1, 2, 3].includes(3, -1)); // true)
+
+
+const contains = (() => 
+    Array.prototype.includes 
+    ? (arr, value) => arr.includes(value)
+    : (arr, value) => arr.some(el => el === value)
+)();
+
+// const contains = (() =>
+//   Array.prototype.includes
+//     ? (arr, value) => arr.includes(value)
+//     : (arr, value) => arr.some(el => el === value)
+// )();
+
+console.log(["foo", "bar"], "baz");
+
+
+</script>
+</body>
+</html>
