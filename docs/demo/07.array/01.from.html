@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array.from()</title>
+</head>
+<body>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<span>111</span>
+<span>222</span>
+<span>333</span>
+<script>
+
+// Array.from()
+
+let arrlike = {
+    "0" : 'a',
+    '1' : 'b',
+    '2' : 'c',
+    length : 3
+}
+// ES5 
+var arr1 = [].slice.call(arrlike);
+console.log(arr1);
+
+// ES6
+var arr2 = Array.from(arrlike);
+console.log(arr2);
+
+// Nodelist
+let ps = document.querySelectorAll("p");
+Array.from(ps).forEach(function (p){
+    console.log(console.log(p) );
+})
+// arguments
+function foo(){
+    var args = Array.from(arguments);
+}
+
+//只要是部署了Iterator接口的数据结构，Array.from都能将其转为数组
+console.log(Array.from('hello'));
+
+let nameSet = new Set(['a', 'b']);
+console.log(Array.from(nameSet) );
+
+// array
+console.log(Array.from(['1', '2', 3]));
+
+// 扩展运算符
+function bar(){
+    var args = [...arguments];
+}
+// 扩展运算符背后调用的是遍历器接口（Symbol.iterator）
+// console.log(([...document.querySelectorAll("p")]));
+
+
+// 第二个参数
+
+console.log(Array.from(arrlike, x => x * x));
+// 等同于
+console.log(Array.from(arrlike).map(x => x * x));
+console.log(Array.from([1, 2, 3], x => x * x))
+
+// nodelist
+let spans = document.querySelectorAll("span");
+console.log(Array.from(spans, s => s.textContent));
+console.log(Array.prototype.map.call(spans, s => s.textContent));
+
+console.log(Array.from([1, , 2, , 3], (n) => n || 0));
+
+
+function typesof(){
+    return Array.from(arguments, value => typeof value);
+};
+
+console.log(typesof([], null, 1));
+
+function stringlength(str){
+    return Array.from(str).length;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
