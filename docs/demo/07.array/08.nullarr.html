@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> entries() keys() values() </title>
+</head>
+<body>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<script>
+
+// 
+console.log(0 in [undefined, undefined, undefined]); // true
+console.log(0 in [, , ,]); // false
+
+// ES5
+// forEach方法
+console.log([,'a'].forEach((x,i) => log(i)); // 1
+
+// filter方法
+console.log(['a',,'b'].filter(x => true)); // ['a','b']
+
+// every方法
+console.log([,'a'].every(x => x==='a')); // true
+
+// some方法
+console.log([,'a'].some(x => x !== 'a')); // false
+
+// map方法
+console.log([,'a'].map(x => 1)); // [,1]
+
+// join方法
+console.log([,'a',undefined,null].join('#')); // "#a##"
+
+// toString方法
+console.log([,'a',undefined,null].toString()); // ",a,,"
+
+
+</script>
+</body>
+</html>
