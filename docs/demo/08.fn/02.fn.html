@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>函数参数的默认值</title>
+</head>
+<body>
+<script>
+
+function f(x=1, y){
+    console.log([x,y]);
+}
+
+f()     //[1, undefined]
+f(2)    //[2, undefined]
+//无法只省略该参数，而不省略它后面的参数，除非显式输入undefined
+//f(,1)   // error
+f(undefined, 1)  //[1,1]
+
+function f2(x, y=5, z){
+    console.log([x,y,z]);
+}
+
+f2();       // [undefined, 5, undefined]
+f2(1)       // [2, 5, undefined]
+// 无法只省略该参数，而不省略它后面的参数，除非显式输入undefined
+//f2(1,,2)    // error
+f2(1, undefined, 2);    // [1, 5, 2]
+
+</script>
+</body>
+</html>
