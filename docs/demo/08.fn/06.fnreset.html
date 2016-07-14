@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>reset</title>
+</head>
+<body>
+<script>
+
+function foo(...values){
+    let result = 0;
+
+    for(var val of values){
+        result += val;
+    }
+
+    return result;
+};
+console.log(foo(2,4,5,6));
+
+/*
+// araguments
+function sortNumbers() {
+    return Array.arguments.slice.call(arguments).sort();
+}
+// rest参数的写法
+const sortNumbers = (...numbers) => numbers.sort()
+*/
+function push(array, ...items){
+    items.forEach(function (item){
+        array.push(item);
+        console.log(item);
+    })
+};
+
+var a = [];
+push(a, 1,2,3,4)
+console.log(a);
+
+
+
+</script>
+</body>
+</html>
