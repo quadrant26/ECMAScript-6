@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>函数参数的默认值</title>
+</head>
+<body>
+<script>
+
+// 指定了默认值后，length属性将失真
+console.log((function(a){}).length);        // 1
+console.log((function(a=1){}).length);      // 0
+console.log((function(a, b, c=2){}).length);// 2
+
+//rest参数也不会计入length属性
+console.log((function (...args){}).length);
+</script>
+</body>
+</html>
