@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>函数绑定</title>
+</head>
+<body>
+<script type="text/babel">
+
+foo::bar;
+// 等同于
+bar.bind(foo);
+
+foo::bar(...arguments);
+// 等同于
+bar.apply(foo, arguments);
+
+// 例一
+import { map, takeWhile, forEach } from "iterlib";
+
+getPlayers()
+::map(x => x.character())
+::takeWhile(x => x.strength > 100)
+::forEach(x => console.log(x));
+
+// 例二
+let { find, html } = jake;
+document.querySelectorAll("div.myClass")
+::find("p")
+::html("hahaha");
+
+</script>
+</body>
+</html>
