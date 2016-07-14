@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> entries() keys() values() </title>
+</head>
+<body>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<script>
+
+// entries() keys() values()
+let arr = [1, 3, 5, 7, 9, 2, 4, 6, 8];
+for(let index of arr.keys() ){
+    console.log(index);
+}
+
+/*
+for(let elem of arr.values()) {
+    console.log(elem)
+}
+*/
+
+for(let [index, elem] of arr.entries() ){
+    console.log([index, elem])
+}
+
+let arr_l = ['a', 'b', 'c'];
+let entries = arr_l.entries();
+console.log(enrties.next().value);
+console.log(enrties.next().value);
+console.log(enrties.next().value);
+
+
+
+
+
+
+</script>
+</body>
+</html>
