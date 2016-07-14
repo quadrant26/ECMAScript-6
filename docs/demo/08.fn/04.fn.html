@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>函数参数的默认值</title>
+</head>
+<body>
+<script>
+
+// 如果参数默认值是一个变量，则该变量所处的作用域，与其他变量的作用域规则是一样的，即先是当前函数的作用域，然后才是全局作用域
+var x = 1;
+
+function log(x, y=x){
+    console.log(y);
+};
+log(2);
+
+let xz = 1;
+function f(y=xz){
+    let xz = 2;
+    console.log(y);
+};
+f()
+
+//全局变量x不存在，就会报错 
+function d(y=xq){
+    let xq = 2;
+    console.log(y)
+}
+//d();
+
+// 如果函数A的参数默认值是函数B，由于函数的作用域是其声明时所在的作用域，那么函数B的作用域不是函数A，而是全局作用域
+let foo = "outer";
+function bar( func = x => foo){
+    let foo = 'inner';
+    console.log(func());
+}
+bar();
+
+
+</script>
+</body>
+</html>
