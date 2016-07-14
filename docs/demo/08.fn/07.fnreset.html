@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>扩展运算符</title>
+</head>
+<body>
+<script>
+
+console.log(...[1,2,3]);
+
+function add(x, y){
+    return x+y;
+}
+
+console.log(add(...[3,56]))
+
+
+// ES5的写法
+function f(x, y, z) {
+  // ...
+}
+var args = [0, 1, 2];
+f.apply(null, args);
+
+// ES6的写法
+function f(x, y, z) {
+  // ...
+}
+var args = [0, 1, 2];
+f(...args);
+
+console.log(Math.max(...[14, 3, 77]))
+
+</script>
+</body>
+</html>
