@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>扩展运算符的应用</title>
+</head>
+<body>
+<script>
+
+// 合并数组
+// es5
+console.log([1,2].concat([4,3]));
+// es6
+console.log([1,2,...[4,3]]);
+
+// 解构赋值结合
+// es5
+a = list[0], rest = list.slice(1);
+//es6
+[1, ...rest] = list
+
+// 函数的返回值
+var dateFields = readDateFields(database);
+var d = new Date(...dateFields);
+
+
+// 字符串
+console.log( [..."hello"])
+//能够正确识别32位的Unicode字符。
+console.log('x\uD83D\uDE80y'.length); // 4
+console.log([...'x\uD83D\uDE80y'].length); // 3
+
+function length(str) {
+  return [...str].length;
+}
+length('x\uD83D\uDE80y')
+
+// 实现了Iterator接口的对象
+/*
+var nodeList = document.querySelectorAll('div');
+var array = [...nodeList];
+*/
+
+
+// Map和Set结构，Generator函数
+let map = new Map([
+    [1, 'one'],
+    [2, 'two'],
+    [3, 'three']
+]);
+let arr = [...map];
+
+// Generator函数运行后，返回一个遍历器对象
+var go = function *(){
+    yield 1;
+    yield 2;
+    yield 3;
+};
+console.log([...go()])
+
+var obj = {1 : 'a', 2 : 'b'};
+console.log([...obj]); // error
+
+
+
+
+
+
+</script>
+</body>
+</html>
