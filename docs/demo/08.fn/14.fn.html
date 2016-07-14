@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>尾递归</title>
+</head>
+<body>
+<script>
+
+// 尾递归
+function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+factorial(5)
+
+function factorial2(n, total) {
+  if (n === 1) return total;
+  return factorial2(n - 1, n * total);
+}
+factorial2(5, 1)
+
+// 非尾递归的fibonacci 递归方法
+function Fibonacci (n) {
+  if ( n <= 1 ) {return 1};
+
+  return Fibonacci(n - 1) + Fibonacci(n - 2);
+}
+Fibonacci(10); // 89
+// Fibonacci(100)
+// Fibonacci(500)
+// 堆栈溢出了
+// 尾递归的fibonacci 递归方法
+function Fibonacci2 (n , ac1 = 1 , ac2 = 1) {
+  if( n <= 1 ) {return ac1};
+
+  return Fibonacci2 (n-1 , ac2 , ac1 + ac2);
+}
+
+// 递归函数的改写
+function tailFactorial(n, total) {
+  if (n === 1) return total;
+  return tailFactorial(n - 1, n * total);
+}
+function factorial(n) {
+  return tailFactorial(n, 1);
+}
+factorial(5) // 120
+
+// 柯里化
+function currying(fn, n) {
+  return function (m) {
+    return fn.call(this, m, n);
+  };
+}
+function tailFactorial(n, total) {
+  if (n === 1) return total;
+  return tailFactorial(n - 1, n * total);
+}
+const factorial = currying(tailFactorial, 1);
+
+factorial(5) // 120
+
+
+</script>
+</body>
+</html>
