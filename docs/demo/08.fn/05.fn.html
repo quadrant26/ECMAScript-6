@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>函数参数的默认值</title>
+</head>
+<body>
+<script>
+
+function throwIfMissing(){
+    throw new Error("Missing parameter");
+}
+
+function foo(mustBeProvided = throwIfMissing()){
+    return mustBeProvided;
+}
+//foo();
+
+
+</script>
+</body>
+</html>
