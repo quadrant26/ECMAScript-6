@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>函数参数的默认值</title>
+</head>
+<body>
+<script>
+
+function log(x, y='world'){
+    console.log(x,y);
+};
+log("hello");
+
+function Point(x=0, y=0){
+    this.x = x;
+    this.y = y;
+}
+
+var p = new Point();
+console.log(p);
+
+// 解构赋值
+log({});
+log({x:5});
+log({x:2, y:3});
+log()
+
+
+function fetch(url, { body = '', method = 'GET', headers = {} }) {
+  console.log(method);
+}
+
+function fetcg(url, {method = "GET"} = {}){
+    console.log(method);
+}
+
+// 第二个参数是一个对象，就会使用默认值
+fetch("http://example.com", {});
+// 没有第二个参数就会报错
+//fetch("http//example.com");  // error
+
+fetcg("http//example.com");  // GET
+
+// 区别是写法一函数参数的默认值是空对象，但是设置了对象解构赋值的默认值
+// 写法二函数参数的默认值是一个有具体属性的对象，但是没有设置对象解构赋值的默认值。
+function m1({x=0, y=0} ={}){
+    console.log([x,y])
+}
+function m2({x,y}={x:0, y:0}){
+    console.log([x,y])
+}
+
+// 函数没有参数的情况
+m1();   // [0, 0]
+m2();   // [0, 0]
+
+// x和y都有值的情况
+m1({x:3,y:8})   // [3, 8]
+m2({x:3,y:8})   // [3, 8]
+
+// // x有值，y无值的情况
+m1({x:3});  // [3, 0]
+m2({x:3});  // [3, undefined]
+
+// x和y都无值的情况
+m1({}) // [0, 0];
+m2({}) // [undefined, undefined]
+
+m1({z: 3}) // [0, 0]
+m2({z: 3}) // [undefined, undefined]
+
+
+
+
+
+
+</script>
+</body>
+</html>
