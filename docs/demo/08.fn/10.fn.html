@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>箭头函数</title>
+</head>
+<body>
+<script>
+
+// 箭头函数
+var f = v => v;
+console.log(f);
+
+var f2 = function (v){
+    return v
+}
+console.log(f2);
+
+var f = () => 5;
+// 等同于
+var f = function () { return 5 };
+var sum = (num1, num2) => num1 + num2;
+// 等同于
+var sum = function(num1, num2) {
+  return num1 + num2;
+};
+
+// 如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用return语句返回
+var sum = (num1, num2) => { return num1 + num2; }
+
+
+//由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号
+ var getTempItem = id => ({ id: id, name: "Temp" });
+
+// 箭头函数可以与变量解构结合使用
+const full = ({ first, last }) => first + ' ' + last;
+
+// 等同于
+function full2(person) {
+  return person.first + ' ' + person.last;
+}
+
+const isEven = n => n % 2 == 0;
+const square = n => n * n;
+
+// 简化回调函数
+[1,2,3].map(function(x){
+    return x*x;
+})
+console.log( [1,2,3].map(x => x*x));
+
+var values = [1,3,4,5]
+var result = values.sort(function (a, b){
+    return a - b;
+})
+var rsult = values.sort((a, b) => a-b);
+
+const numbers = (...nums) => nums;
+numbers(1, 2, 3, 4, 5)
+// [1,2,3,4,5]
+
+const headAndTail = (head, ...tail) => [head, tail];
+headAndTail(1, 2, 3, 4, 5)
+// [1,[2,3,4,5]]
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
