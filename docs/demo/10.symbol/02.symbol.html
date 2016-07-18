@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>作为属性名的Symbol</title>
+</head>
+<body>
+<script>
+
+let mysymbol = Symbol();
+
+// one
+// var a = {};
+// a[mysymbol] = "hello";
+
+// two
+// var a = {
+//     [mysymbol] : "hello"
+// }
+
+// three
+var a = {};
+Object.defineProperty(a, mysymbol, {value:'hello'});
+
+
+var mySymbol = Symbol();
+var a = {};
+
+a.mySymbol = 'Hello!';
+console.log( a[mySymbol]); // undefined
+console.log( a['mySymbol']); // "Hello!"
+
+// Symbol类型还可以用于定义一组常量，保证这组常量的值都是不相等的
+var log =  {}
+log.levels = {
+    DEBUG : Symbol('debug'),
+    INFO : Symbol('info'),
+    WARN : Symbol('warn')
+};
+console.log(log.levels.DEBUG, 'debug message');
+console.log(log.levels.INFO, 'info message');
+
+// example
+const COLOR_RED = Symbol();
+const COLOR_FREEN = Symbol();
+
+function getComplement(color){
+    switch( color){
+        case COLOR_RED:
+            return COLOR_RED;
+        case COLOR_FREEN:
+            return COLOR_FREEN;
+        default:
+            throw new Error("undefined color");
+    }
+}
+</script>
+</body>
+</html>
