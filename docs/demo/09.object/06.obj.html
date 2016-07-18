@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>属性的可枚举性</title>
+</head>
+<body>
+<script>
+
+let obj = {foo : 123};
+console.log(Object.getOwnPropertyDescriptor(obj, 'foo'));
+
+console.log(Object.getOwnPropertyDescriptor(Object.prototype, 'toString').enumerable);
+
+console.log(Object.getOwnPropertyDescriptor([], 'length').enumerable);
+
+// ES6规定，所有Class的原型的方法都是不可枚举的
+console.log(Object.getOwnPropertyDescriptor(class {foo() {}}.prototype, 'foo').enumerable);
+// false)
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
