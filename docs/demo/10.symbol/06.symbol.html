@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>内置的Symbol值</title>
+</head>
+<body>
+<script>
+
+// 1. Symbol.hasInstance
+class MyClass{
+    [Symbol.hasInstance](foo) {
+        return foo instanceof Array;
+    }
+}
+console.log( [1,2,3] instanceof new MyClass() );
+
+// 2. Symbol.isConcatSpreadable
+let arr1 = ['c', 'd'];
+['a', 'b'].concat(arr1, 'e');
+console.log(arr1[Symbol.isConcatSpreadable]) // undifined
+// Symbol.isConcatSpreadable属性等于true或undefined，都有这个效果
+let arr2 = ['c', 'd'];
+arr2[Symbol.isConcatSpreadable] = false;
+['a', 'b'].concat(arr2, 'e') // ['a', 'b', ['c','d'], 'e']
+// 它的Symbol.isConcatSpreadable属性默认为false，必须手动打开
+
+let obj = {length: 2, 0: 'c', 1: 'd'};
+['a', 'b'].concat(obj, 'e') // ['a', 'b', obj, 'e']
+
+obj[Symbol.isConcatSpreadable] = true;
+['a', 'b'].concat(obj, 'e') // ['a', 'b', 'c', 'd', 'e']
+
+class A1 extends Array{
+    constructor(args){
+        super(args);
+        this[Symbol.isConcatSpreadable] = true;
+    }
+}
+
+class A2 extends Array{
+    constructor(args){
+        super(args);
+        this[Symbol.isConcatSpreadable] = false;
+    }
+}
+let a1 = new A1();
+a1[0] = 3;
+a1[1] = 4;
+let a2 = new A2();
+a2[0] = 5;
+a2[1] = 6;
+[1, 2].concat(a1).concat(a2);
+
+// 3.   Symbol.species
+static get [Symbol.species]() {
+  return this;
+}
+
+// 4. Symbol.match
+String.prototype.match(regexp)
+// 等同于
+regexp[Symbol.match](this)
+
+class MyMatcher {
+  [Symbol.match](string) {
+    return 'hello world'.indexOf(string);
+  }
+}
+
+'e'.match(new MyMatcher()) // 1
+
+// 5. Symbol.replace
+String.prototype.replace(searchValue, replaceValue)
+// 等同于
+searchValue[Symbol.replace](this, replaceValue)
+
+// 6. Symbol.search
+String.prototype.search(regexp)
+// 等同于
+regexp[Symbol.search](this)
+
+class MySearch {
+  constructor(value) {
+    this.value = value;
+  }
+  [Symbol.search](string) {
+    return string.indexOf(this.value);
+  }
+}
+'foobar'.search(new MySearch('foo')) // 0
+
+// 7. Symbol.split
+String.prototype.split(separator, limit)
+// 等同于
+separator[Symbol.split](this, limit)
+
+
+// 8. Symbol.iterator
+
+var myIterable = {};
+myIterable[Symbol.iterator] = function* () {
+  yield 1;
+  yield 2;
+  yield 3;
+};
+
+[...myIterable] // [1, 2, 3]
+
+// 9. Symbol.toPrimitive
+let obj = {
+  [Symbol.toPrimitive](hint) {
+    switch (hint) {
+      case 'number':
+        return 123;
+      case 'string':
+        return 'str';
+      case 'default':
+        return 'default';
+      default:
+        throw new Error();
+     }
+   }
+};
+
+2 * obj // 246
+3 + obj // '3default'
+obj == 'default' // true
+String(obj) // 'str'
+
+// 10. Symbol.toStringTag
+
+({[Symbol.toStringTag]: 'Foo'}.toString())
+// "[object Foo]"
+
+class Collection {
+  get [Symbol.toStringTag]() {
+    return 'xxx';
+  }
+}
+var x = new Collection();
+Object.prototype.toString.call(x)
+
+
+// 11. Symbol.unscopables
+Array.prototype[Symbol.unscopables]
+// {
+//   copyWithin: true,
+//   entries: true,
+//   fill: true,
+//   find: true,
+//   findIndex: true,
+//   keys: true
+// }
+
+Object.keys(Array.prototype[Symbol.unscopables])
+// ['copyWithin', 'entries', 'fill', 'find', 'findIndex', 'keys']
+
+// 没有unscopables时
+class MyClass {
+  foo() { return 1; }
+}
+
+var foo = function () { return 2; };
+
+with (MyClass.prototype) {
+  foo(); // 1
+}
+
+// 有unscopables时
+class MyClass {
+  foo() { return 1; }
+  get [Symbol.unscopables]() {
+    return { foo: true };
+  }
+}
+
+var foo = function () { return 2; };
+
+with (MyClass.prototype) {
+  foo(); // 2
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
