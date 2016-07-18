@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Object.is()</title>
+</head>
+<body>
+<script>
+
+console.log(Object.is('foo', 'foo'));   // true
+console.log(Object.is({},{}));          // false
+
+console.log(+0 === -0);                 // true
+console.log(Object.is(+0, -0));         // false
+console.log(NaN === NaN);               // false
+console.log(Object.is(NaN, NaN));       // true
+
+
+// ECMA5
+Object.definedProperty(Object, 'is', {
+    value : function (x, y){
+        if(x === y){
+            // 针对 +0 不等于 -0 的情况
+            return x !== 0 || 1/x === 1/y;
+        }
+        // 针对 NaN 的情况
+        return x !== x && y !== y;
+    },
+    configurable : true,
+    enumerable : false,
+    writable : true
+
+})
+
+</script>
+</body>
+</html>
