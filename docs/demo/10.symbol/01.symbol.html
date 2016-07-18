@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Symbol 概述</title>
+</head>
+<body>
+<script>
+
+let s = Symbol();
+console.log(typeof s);
+
+let s1 = Symbol("foo");
+let s2 = Symbol("bar");
+
+console.log(s1,s1.toString());
+console.log(s2,s2.toString());
+
+console.log(Symbol() === Symbol());             // false
+console.log(Symbol("foo") === Symbol("foo"));   // false
+
+//console.log("my Symbol is: " + s2); //TypeError: Cannot convert a Symbol value to a string
+
+console.log( String(s2) );
+console.log( s2.toString() );
+
+var sym = Symbol();
+console.log(Boolean(sym)) // true
+console.log(!sym)  // false
+
+console.log(Number(sym)); // TypeError
+console.log(sym + 2); // TypeError)
+</script>
+</body>
+</html>
