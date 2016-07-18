@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>消除魔术字符串</title>
+</head>
+<body>
+<script>
+
+function getArea(shape, options) {
+  var area = 0;
+
+  switch (shape) {
+    case 'Triangle': // 魔术字符串
+      area = .5 * options.width * options.height;
+      break;
+    /* ... more code ... */
+  }
+
+  return area;
+}
+
+getArea('Triangle', { width: 100, height: 100 }); // 魔术字符串
+
+// 常用的消除魔术字符串的方法，就是把它写成一个变量
+
+var shapeType = {
+  triangle: 'Triangle'
+};
+
+function getArea(shape, options) {
+  var area = 0;
+  switch (shape) {
+    case shapeType.triangle:
+      area = .5 * options.width * options.height;
+      break;
+  }
+  return area;
+}
+
+getArea(shapeType.triangle, { width: 100, height: 100 });
+
+
+// 
+var shapeType = {
+  triangle: Symbol()
+};
+
+
+
+</script>
+</body>
+</html>
