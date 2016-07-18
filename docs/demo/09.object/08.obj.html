@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>__proto__属性，Object.setPrototypeOf()，Object.getPrototypeOf()</title>
+</head>
+<body>
+<script>
+
+// __proto__
+var obj = {
+    method : function (){}
+};
+console.log(obj.__proto__);
+
+// es5的写法
+//var obj = Object.create(someOtherObj);
+//obj.method = function() {  };
+
+// Object.setPrototypeOf()
+// 格式
+//Object.setPrototypeOf(object, prototype)
+
+// 用法
+//var o = Object.setPrototypeOf({}, null);
+/**
+function (obj, proto) {
+  obj.__proto__ = proto;
+  return obj;
+}
+ */
+
+let proto = {};
+let obj2 = {x:10};
+
+Object.setPrototypeOf(obj2, proto);
+proto.y = 20;
+proto.z = 30;
+console.log(obj2.y);    // y : 20
+
+// 3. getPrototypeOf()
+function Rectangle(){}
+
+var rec = new Rectangle();
+
+console.log( Object.getPrototypeOf(rec) === Rectangle.prototype );
+console.log( Object.setPrototypeOf(rec, Object.prototype) );
+console.log( Object.getPrototypeOf(rec) === Rectangle.prototype );
+
+</script>
+</body>
+</html>
