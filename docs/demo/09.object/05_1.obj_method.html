@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Object.assign()</title>
+</head>
+<body>
+<script>
+
+// 为对象添加属性
+class Point{
+    constructor(x, y){
+        // Object.assign方法，将x属性和y属性添加到Point类的对象实例
+        return Object.assign(this, {x,y});
+    }
+}
+
+// 为对象添加方法
+Obejct.assign(SomeClass.prototype, {
+    someMethod(arg1, arg2){
+        ...
+    },
+    anotherMethod(){
+        ...
+    }
+});
+
+// 等同于下面的写法
+SomeClass.prototype.someMethod = function (arg1, arg2){};
+SomeClass.prototype.anotherMethod = function (){};
+
+// 克隆对象
+function clone(origin){
+    return Obejct.assign({}, origin);
+}
+// 
+function clone2(origin){
+    var originProto = Object.getPrototypeOf(origin);
+    return Object.assign(Object.create(originProto), origin);
+};
+
+// 合并多个对象
+const merge = (target, ...sources) => Object.assign(targer, ...sources);
+
+// 为指定属性设置默认值
+const DEFAULTS = {
+    logLevel : 0,
+    outputFormat : html                
+};
+
+function processContent(options){
+    let options = Object.assign({}, DEFAULTS, options);
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
