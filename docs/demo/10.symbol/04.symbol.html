@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>属性名的遍历</title>
+</head>
+<body>
+<script>
+
+var obj = {};
+var a = Symbol('a');
+var b = Symbol('b');
+
+obj[a] = 'hello';
+obj[b] = 'world';
+
+var objsymbol = Object.getOwnPropertySymbols(obj)
+console.log(objsymbol);
+
+
+var obj = {};
+var foo = Symbol("foo");
+Object.defineProperty(obj, foo, {
+  value: "foobar",
+});
+
+for (var i in obj) {
+  console.log(i); // 无输出
+}
+console.log(Object.getOwnPropertyNames(obj) );// []
+console.log(Object.getOwnPropertySymbols(obj) );// [Symbol(foo)]
+
+
+let obj3 = {
+  [Symbol('my_key')]: 1,
+  enum: 2,
+  nonEnum: 3
+};
+
+console.log( Reflect.ownKeys(obj3) );    // [Symbol(my_key), 'enum', 'nonEnum']
+
+var size = Symbol('size');
+
+class Collection {
+  constructor() {
+    this[size] = 0;
+  }
+
+  add(item) {
+    this[this[size]] = item;
+    this[size]++;
+  }
+
+  static sizeOf(instance) {
+    return instance[size];
+  }
+}
+
+var x = new Collection();
+Collection.sizeOf(x) // 0
+
+x.add('foo');
+Collection.sizeOf(x) // 1
+
+Object.keys(x) // ['0']
+Object.getOwnPropertyNames(x) // ['0']
+Object.getOwnPropertySymbols(x) // [Symbol(size)]
+
+
+
+
+</script>
+</body>
+</html>
