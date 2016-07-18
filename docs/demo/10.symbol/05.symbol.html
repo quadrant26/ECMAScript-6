@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Symbol.for()，Symbol.keyFor()</title>
+</head>
+<body>
+<script>
+
+var s1 = Symbol.for("foo");
+var s2 = Symbol.for("foo");
+// 都是同样参数的Symbol.for方法生成的，所以实际上是同一个值
+console.log(s1 === s2);         // true
+
+console.log(　Symbol.for("bar") === Symbol.for("bar") );// true
+console.log(　 Symbol("bar") === Symbol("bar") );// false
+
+// keyFor()
+console.log(Symbol.keyFor(s1));         // foo
+console.log(Symbol.keyFor(Symbol('foo')));   // undefined
+
+// Symbol.for为Symbol值登记的名字，是全局环境的，可以在不同的iframe或service worker中取到同一个值
+
+
+
+
+
+</script>
+</body>
+</html>
