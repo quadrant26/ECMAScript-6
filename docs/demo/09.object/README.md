@@ -158,11 +158,11 @@
 
 8.__proto__属性，Object.setPrototypeOf()，Object.getPrototypeOf()
 
-    8.1 __proto__属性
+    1 __proto__属性
 
         __proto__属性（前后各两个下划线），用来读取或设置当前对象的prototype对象
 
-    8.2 Object.setPrototypeOf()
+    2 Object.setPrototypeOf()
 
         Object.setPrototypeOf方法的作用与__proto__相同，用来设置一个对象的prototype对象
 
@@ -172,7 +172,7 @@
             // 用法
             var o = Object.setPrototypeOf({}, null);
 
-    8.3 Object.getPrototypeOf()
+    3 Object.getPrototypeOf()
 
         该方法与setPrototypeOf方法配套，用于读取一个对象的prototype对象。
 
@@ -180,7 +180,7 @@
 
 9.Object.values()，Object.entries()
     
-    9.1 Object.values()
+    1 Object.values()
 
         Object.values方法返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键值
 
@@ -190,7 +190,7 @@
 
         如果参数不是对象，Object.values会先将其转为对象。由于数值和布尔值的包装对象，都不会为实例添加非继承的属性。所以，Object.values会返回空数组
 
-    9.2 Object.entries()
+    2 Object.entries()
 
         Object.entries方法返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键值对数组
 
@@ -210,7 +210,7 @@
 
     Babel转码器已经支持这项功能
 
-    10.1 Rest解构赋值
+    1 Rest解构赋值
 
         由于Rest解构赋值要求等号右边是一个对象，所以如果等号右边是undefined或null，就会报错，因为它们无法转为对象
 
@@ -224,7 +224,7 @@
 
         Rest解构赋值不会拷贝继承自原型对象的属性
 
-    10.2 扩展运算符
+    2 扩展运算符
 
         扩展运算符（...）用于取出参数对象的所有可遍历属性，拷贝到当前对象之中
 
