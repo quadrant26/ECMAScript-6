@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Object.getOwnPropertyDescriptors()</title>
+</head>
+<body>
+<script>
+
+var obj = { p: 'a' };
+console.log( Object.getOwnPropertyDescriptor(obj, 'p'));
+
+
+// ES7有一个提案，提出了Object.getOwnPropertyDescriptors方法，返回指定对象所有自身属性（非继承属性）的描述对象
+
+const obj2 = {
+  foo: 123,
+  get bar() { return 'abc' }
+};
+
+console.log( getOwnPropertyDescriptors(obj2));
+
+function getOwnPropertyDescriptors(obj) {
+  const result = {};
+  for (let key of Reflect.ownKeys(obj)) {
+    result[key] = Object.getOwnPropertyDescriptor(obj, key);
+  }
+  return result;
+}
+
+</script>
+</body>
+</html>
