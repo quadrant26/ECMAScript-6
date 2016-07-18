@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>方法的name属性</title>
+</head>
+<body>
+<script>
+
+var person = {
+    sayName(){
+        console.log(this.name);
+    },
+    get firstName(){
+        return 'Nicholas';
+    }
+};
+console.log(person.sayName.name);       // sayName
+console.log(person.firstName.name);     // get firstName
+// 方法的name属性返回函数名（即方法名）。如果使用了取值函数，则会在方法名前加上get。如果是存值函数，方法名的前面会加上set
+
+// bind方法创造的函数，name属性返回“bound”加上原函数的名字；Function构造函数创造的函数，name属性返回“anonymous”
+console.log((new Function()).name);
+var doSomething = function (){
+
+}
+console.log( doSomething.bind().name);
+
+const key1 = Symbol("description");
+const key2 = Symbol();
+
+let obj = {
+    [key1](){},
+    [key2](){}
+};
+// 对象的方法是一个Symbol值，那么name属性返回的是这个Symbol值的描述
+console.log(obj[key1].name);    // description
+console.log(obj[key2].name);    // 
+
+
+</script>
+</body>
+</html>
