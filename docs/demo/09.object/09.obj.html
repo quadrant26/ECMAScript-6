@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Object.values()，Object.entries()</title>
+</head>
+<body>
+<script>
+
+// Object.values()
+var obj = { foo: "bar", baz: 42 };
+//console.log( Object.values(obj));
+
+var obj2 = { 100: 'a', 2: 'b', 7: 'c' };
+//Object.values(obj2)
+// Object.entries()
+console.log( Object.entries({ [Symbol()]: 123, foo: 'abc' }) );
+// [ [ 'foo', 'abc' ] ]
+
+// Object.entries方法的一个用处是，将对象转为真正的Map结构
+
+var obj = { foo: 'bar', baz: 42 };
+var map = new Map(Object.entries(obj));
+console.log(map); // Map { foo: "bar", baz: 42 }
+
+// Generator函数的版本
+function* entries(obj) {
+  for (let key of Object.keys(obj)) {
+    yield [key, obj[key]];
+  }
+}
+
+// 非Generator函数的版本
+function entries(obj) {
+  let arr = [];
+  for (let key of Object.keys(obj)) {
+    arr.push([key, obj[key]]);
+  }
+  return arr;
+}
+
+</script>
+</body>
+</html>
