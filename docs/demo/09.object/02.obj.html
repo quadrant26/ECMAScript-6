@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>属性名表达式</title>
+</head>
+<body>
+<script>
+
+// method 1
+//obj.foo = 'bar';
+// method 2
+//obj['a'+'bc'] = 123;
+
+let prokey = 'bar';
+
+let obj = {
+    [prokey] : true,
+    ['a'+'bc'] : 123
+};
+console.log(obj);
+
+var lastWord = 'last world';
+var a = {
+    'first word' : 'hello',
+    [lastWord] : 'world'
+};
+
+console.log(a['first word']);   // hello
+console.log(a[lastWord]);       // world
+//console.log(a['last word']);    // world
+
+// 定义方法
+let obj2 = {
+    ['h'+'ello'](){
+        return 'hi';
+    }
+}
+console.log( obj2.hello() );
+
+// 报错
+var foo = 'bar';
+var bar = 'abc';
+var baz = { [foo] };
+
+// 正确
+var foo = 'bar';
+var baz = { [foo]: 'abc'};
+
+</script>
+</body>
+</html>
