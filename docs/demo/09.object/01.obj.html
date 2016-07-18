@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>属性的简洁表示法</title>
+</head>
+<body>
+<script>
+
+var foo = 'bar';
+var baz = {foo};
+// 等同于
+var baz = {foo:foo};
+
+
+function f(x,y){
+    return {x,y};
+    // 等同于
+    // return {x:x, y:y}
+};
+
+// 方法简写
+var o = {
+    method() {
+        return 'Hello';
+    }
+    /** 等同于
+     * method : function (){
+     *      return 'hello';
+     * }
+     */
+};
+
+// example 
+var birth = '2016/01/01';
+
+var Person = {
+    name : '张三',
+
+    birth,
+
+    hello(){
+        console.log('我的名字是：', this.name);
+    }
+}
+
+Person.hello();
+
+var ms = {};
+
+function getItem(key){
+    return key in ms ? ms[key] : null;
+}
+
+function setItem(key. value){
+    ms[key] = value;
+}
+
+function clear(){
+    ms = {};
+}
+
+module.exports = {getItem, setItem, clear};
+// 等同于
+/**
+ * module.exports = {
+ *      getItem : getItem,
+ *      setItem : setItem,
+ *      clear : clear
+ * }
+ */
+
+// 属性赋值器
+var cart = {
+    _wheels  : 4,
+
+    get wheels(){
+        return this._wheels;
+    }
+
+    set wheels(value){
+        if(value < this._wheels){
+            throw new Error("数值太小了");
+        }
+        this._wheels = value;
+    }
+}
+
+var obj = {
+    * m(){
+        yield 'hello, world';
+    }
+}
+
+</script>
+</body>
+</html>
