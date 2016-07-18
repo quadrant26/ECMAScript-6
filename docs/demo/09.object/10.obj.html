@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>对象的扩展运算符</title>
+</head>
+<body>
+<script type="text/babel">
+
+// Rest解构赋值
+let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+console.log(x);
+console.log(y);
+console.log(z);
+
+// 右边是undefined或null，就会报错，因为它们无法转为对象
+let { x, y, ...z } = null; // 运行时错误
+let { x, y, ...z } = undefined; // 运行时错误
+
+Rest解构赋值必须是最后一个参数，否则会报错
+let { ...x, y, z } = obj; // 句法错误
+let { x, ...y, ...z } = obj; // 句法错误
+
+// 扩展运算符
+let z = { a: 3, b: 4 };
+let n = { ...z };
+console.log(n); // { a: 3, b: 4 }
+// 同于使用Object.assign方法
+let aClone = { ...a };
+// 等同于
+let aClone = Object.assign({}, a);
+
+</script>
+</body>
+</html>
