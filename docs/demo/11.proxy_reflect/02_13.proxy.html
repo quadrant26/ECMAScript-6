@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy实例的方法 setPrototypeOf()</title>
+</head>
+<body>
+<script>
+
+// setPrototypeOf
+var handler = {
+  setPrototypeOf (target, proto) {
+    throw new Error('Changing the prototype is forbidden');
+  }
+};
+var proto = {};
+var target = function () {};
+var proxy = new Proxy(target, handler);
+proxy.setPrototypeOf(proxy, proto);
+// Error: Changing the prototype is forbidden
+
+
+
+
+</script>
+</body>
+</html>
