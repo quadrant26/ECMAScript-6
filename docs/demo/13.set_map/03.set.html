@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Set 遍历的应用</title>
+</head>
+<body>
+<script>
+
+// 数组遍历
+let set1 = new Set(['red', 'green', 'blue']);
+let arr1 = [...set];
+// ['red', 'green', 'blue']
+
+// 数组去重
+let arr = [3, 5, 2, 2, 5, 5];
+let unique = [...new Set(arr)];
+// [3, 5, 2]
+
+// map
+let set2 = new Set([1, 2, 3]);
+set2 = new Set([...set2].map(x => x * 2));
+// 返回Set结构：{2, 4, 6}
+
+// filter
+let set3 = new Set([1, 2, 3, 4, 5]);
+set3 = new Set([...set3].filter(x => (x % 2) == 0));
+// 返回Set结构：{2, 4}
+
+
+let a = new Set([1, 2, 3]);
+let b = new Set([4, 3, 2]);
+
+// 并集
+let union = new Set([...a, ...b]);
+// [1, 2, 3, 4]
+
+// 交集
+let intersect = new Set([...a].filter(x => b.has(x)));
+// [2, 3]
+
+// 差集
+let difference = new Set([...a].filter(x => !b.has(x)));
+// [1]
+
+// 遍历操作中，同步改变原来的Set结构
+// 方法一 利用原Set结构映射出一个新的结构，然后赋值给原来的Set结构
+let set = new Set([1, 2, 3]);
+set = new Set([...set].map(val => val * 2));
+// set的值是2, 4, 6
+
+// 方法二 利用Array.from方法
+let set = new Set([1, 2, 3]);
+set = new Set(Array.from(set, val => val * 2));
+// set的值是2, 4, 6
+
+
+</script>
+</body>
+</html>
