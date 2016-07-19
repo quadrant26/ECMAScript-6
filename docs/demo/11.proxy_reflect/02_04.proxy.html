@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy实例的方法 has()</title>
+</head>
+<body>
+<script>
+
+// has
+var handler = {
+  has (target, key) {
+    if (key[0] === '_') {
+      return false;
+    }
+    return key in target;
+  }
+};
+var target = { _prop: 'foo', prop: 'foo' };
+var proxy = new Proxy(target, handler);
+'_prop' in proxy // false
+
+
+
+let stu1 = {name: 'Owen', score: 59};
+let stu2 = {name: 'Mark', score: 99};
+
+let handler = {
+  has(target, prop) {
+    if (prop === 'score' && target[prop] < 60) {
+      console.log(`${target.name} 不及格`);
+      return false;
+    }
+    return prop in target;
+  }
+}
+
+let oproxy1 = new Proxy(stu1, handler);
+let oproxy2 = new Proxy(stu2, handler);
+
+for (let a in oproxy1) {
+  console.log(oproxy1[a]);
+}
+// Owen
+// Owen 不及格
+
+for (let b in oproxy2) {
+  console.log(oproxy2[b]);
+}
+// Mark
+// Mark 99
+</script>
+</body>
+</html>
