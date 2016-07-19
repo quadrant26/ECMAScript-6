@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy.revocable()</title>
+</head>
+<body>
+<script>
+
+let target = {};
+let handler = {};
+
+let {proxy, revoke} = Proxy.revocable(target, handler);
+
+proxy.foo = 123;
+console.log(proxy.foo);     // 123
+
+revoke();
+console.log(proxy.foo);     // Type Error
+
+
+
+
+
+
+</script>
+</body>
+</html>
