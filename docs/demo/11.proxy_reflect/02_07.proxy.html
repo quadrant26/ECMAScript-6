@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy实例的方法 defineProperty()</title>
+</head>
+<body>
+<script>
+
+// defineProperty
+
+var handler = {
+  defineProperty (target, key, descriptor) {
+    return false;
+  }
+};
+var target = {};
+var proxy = new Proxy(target, handler);
+proxy.foo = 'bar'
+// TypeError: proxy defineProperty handler returned false for property '"foo"'
+
+
+
+
+
+</script>
+</body>
+</html>
