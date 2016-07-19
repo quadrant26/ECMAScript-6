@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reflect概述</title>
+</head>
+<body>
+<script>
+
+// old 
+try{
+    Object.defineProperty(target, property, attributes);
+    // success
+}catch (e){
+    // failure
+}
+// new
+if(Reflect.defineProperty(target, property, attributes)){
+    // success
+}else{
+    // failure
+}
+
+// old
+"assign" in Object;
+// new
+Reflect.has(Object, 'assign');
+
+Proxy(target, {
+    set : function (target, name, value, receiver){
+        var success = Reflect.set(target, name, value, receiver);
+        if(success){
+            log('property ' + name + 'on ' + target + "set to " + value);
+        }
+        return success;
+    }
+})
+
+var loggedObj = new Proxy(obj, {
+    get(target, name){
+        console.log('get', target,  name);
+        return Reflect.get(target, name);
+    },
+    deleteProperty(target, name) {
+    console.log('delete' + name);
+    return Reflect.deleteProperty(target, name);
+  },
+  has(target, name) {
+    console.log('has' + name);
+    return Reflect.has(target, name);
+  }
+})
+
+</script>
+</body>
+</html>
