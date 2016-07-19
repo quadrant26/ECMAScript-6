@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy实例的方法 isExtensible()</title>
+</head>
+<body>
+<script>
+
+// isExtensible
+var p = new Proxy({}, {
+  isExtensible: function(target) {
+    console.log("called");
+    return true;
+  }
+});
+
+Object.isExtensible(p); // called
+
+// 这个方法有一个强限制，如果不能满足下面的条件，就会抛出错误。
+Object.isExtensible(proxy) === Object.isExtensible(target)
+
+
+
+
+
+</script>
+</body>
+</html>
