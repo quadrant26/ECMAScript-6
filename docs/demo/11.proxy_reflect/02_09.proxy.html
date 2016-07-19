@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy实例的方法 getPrototypeOf()</title>
+</head>
+<body>
+<script>
+
+// getPrototypeOf
+var proto = {};
+var p = new Proxy({}, {
+  getPrototypeOf(target) {
+    return proto;
+  }
+});
+Object.getPrototypeOf(p) === proto // true
+
+
+
+
+
+</script>
+</body>
+</html>
