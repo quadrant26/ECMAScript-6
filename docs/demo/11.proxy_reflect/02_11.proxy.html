@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy实例的方法 ownKeys()</title>
+</head>
+<body>
+<script>
+
+// ownKeys
+let target = {};
+
+let handler = {
+  ownKeys(target) {
+    return ['hello', 'world'];
+  }
+};
+
+let proxy = new Proxy(target, handler);
+
+Object.keys(proxy)
+// [ 'hello', 'world' ]
+
+
+let target = {
+  _bar: 'foo',
+  _prop: 'bar',
+  prop: 'baz'
+};
+
+let handler = {
+  ownKeys (target) {
+    return Reflect.ownKeys(target).filter(key => key[0] !== '_');
+  }
+};
+
+let proxy = new Proxy(target, handler);
+for (let key of Object.keys(proxy)) {
+  console.log(target[key]);
+}
+// "baz"
+
+</script>
+</body>
+</html>
