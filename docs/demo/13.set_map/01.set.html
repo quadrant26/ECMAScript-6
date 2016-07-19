@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Set</title>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+
+// Set
+var s = new Set();
+[2, 3, 5, 4, 5, 2, 2].map(x => s.add(x));
+
+for (let i of s) {
+  //console.log(i);// 2 3 5 4
+}
+
+// Set 初始化
+// 1
+var set1 = new Set([1,2,3,4,3]);
+console.log([...set1]);
+
+//2.
+var set2 = new Set([1, 2, 3, 4, 5, 5, 5, 5]);
+console.log(set2.size);
+
+//3
+function divs(){
+    return [...document.querySelectorAll('div')]
+}
+var set3 = new Set(divs());
+//// 类似于
+//divs().forEach(div => set.add(div));
+console.log(set3.size);
+
+let set4 = new Set();
+let a = NaN;
+let b = NaN;
+set4.add(a);
+set4.add(b);
+console.log(set4); // Set {NaN}
+
+let set5 = new Set();
+set5.add({});
+console.log(set5.size); //1
+set5.add({})
+console.log(set5.size); //2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
