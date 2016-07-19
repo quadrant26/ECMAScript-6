@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Map 属性和方法</title>
+</head>
+<body>
+<script>
+
+var map = new Map();
+// size
+console.log(map.size); // 0
+
+// set
+map.set("edition", 6);
+map.set(1, "32").set(2, "av");  // 链式写法
+
+// get
+console.log(map.get(1));        // 32
+
+// has
+console.log(map.has(3));        // false
+console.log(map.has(2));        // true
+
+// delete
+map.delete(3); // undefined
+map.delete(2);
+
+console.log(map.size);
+// clear
+map.clear()
+console.log(map.size);
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
