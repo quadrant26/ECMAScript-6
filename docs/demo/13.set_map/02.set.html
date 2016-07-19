@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Set 的属性和方法</title>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+
+var set = new Set();
+set.add(1).add(2).add(2);
+console.log(set.size);
+
+// has()
+console.log(set.has(1));    // true
+console.log(set.has(2));    // true
+console.log(set.has(3));    // false
+
+// delete
+set.delete(2);
+console.log(set.has(2));    // false
+
+// Array.from方法可以将Set结构转为数组
+var items = new Set([1, 2, 3, 4, 5]);
+var array = Array.from(items);
+console.log(array);
+
+
+// keys() values() entries()
+for(let item of items.keys()){
+    console.log('key =>' + item);
+}
+
+for(let item of items.values()){
+    console.log('value =>' + item);
+}
+
+// key方法、value方法、entries方法返回的都是遍历器对象（详见《Iterator对象》一章）。由于Set结构没有键名，只有键值（或者说键名和键值是同一个值），所以key方法和value方法的行为完全一致
+
+for(let item of items.entries()){
+    console.log('entrie =>' + item);
+}
+// entries方法返回的遍历器，同时包括键名和键值，所以每次输出一个数组，它的两个成员完全相等
+
+for(let item of items){
+    console.log(item);
+}
+
+items.forEach((value, key) => console.log("forEach ->" + value *2));
+
+
+
+
+
+</script>
+</body>
+</html>
