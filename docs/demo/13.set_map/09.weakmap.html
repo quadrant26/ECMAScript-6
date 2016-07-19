@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Map 与其他数据结构的互相转换</title>
+</head>
+<body>
+<div class="element"></div>
+<div class="element"></div>
+<div class="element"></div>
+<div class="element"></div>
+<div class="element"></div>
+<div class="element" id="logo"></div>
+<script>
+
+var wm = new WeakMap();
+var element = document.querySelector(".element");
+
+wm.set(element, "Original");
+wm.get(element) // "Original"
+
+element.parentNode.removeChild(element);
+element = null;
+wm.get(element) // undefined
+
+// 
+let myElement = document.getElementById('logo');
+let myWeakmap = new WeakMap();
+
+myWeakmap.set(myElement, {timesClicked: 0});
+
+myElement.addEventListener('click', function() {
+  let logoData = myWeakmap.get(myElement);
+  logoData.timesClicked++;
+  myWeakmap.set(myElement, logoData);
+}, false);
+
+
+let _counter = new WeakMap();
+let _action = new WeakMap();
+
+class Countdown {
+  constructor(counter, action) {
+    _counter.set(this, counter);
+    _action.set(this, action);
+  }
+  dec() {
+    let counter = _counter.get(this);
+    if (counter < 1) return;
+    counter--;
+    _counter.set(this, counter);
+    if (counter === 0) {
+      _action.get(this)();
+    }
+  }
+}
+
+let c = new Countdown(2, () => console.log('DONE'));
+
+c.dec()
+c.dec()
+// DONE
+
+
+</script>
+</body>
+</html>
