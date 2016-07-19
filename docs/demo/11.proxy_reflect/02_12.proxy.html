@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Proxy实例的方法 preventExtensions()</title>
+</head>
+<body>
+<script>
+
+// preventExtensions
+var p = new Proxy({}, {
+  preventExtensions: function(target) {
+    return true;
+  }
+});
+
+// proxy.preventExtensions方法返回true，但这时Object.isExtensible(proxy)会返回true，因此报错
+//Object.preventExtensions(p) // 报错
+
+//通常要在proxy.preventExtensions方法里面，调用一次Object.preventExtensions
+var p = new Proxy({}, {
+  preventExtensions: function(target) {
+    console.log("called");
+    Object.preventExtensions(target);
+    return true;
+  }
+});
+
+Object.preventExtensions(p)
+// "called"
+// true
+</script>
+</body>
+</html>
