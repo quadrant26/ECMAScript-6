@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Map 遍历</title>
+</head>
+<body>
+<script>
+
+let map = new Map([
+  ['F', 'no'],
+  ['T',  'yes'],
+]);
+
+for (let key of map.keys()) {
+  console.log(key);
+}
+// "F"
+// "T"
+
+for (let value of map.values()) {
+  console.log(value);
+}
+// "no"
+// "yes"
+
+for (let item of map.entries()) {
+  console.log(item[0], item[1]);
+}
+// "F" "no"
+// "T" "yes"
+
+// 或者
+for (let [key, value] of map.entries()) {
+  console.log(key, value);
+}
+
+// 等同于使用map.entries()
+for (let [key, value] of map) {
+  console.log(key, value);
+}
+
+// 扩展运算符
+let map2 = new Map([
+  [1, 'one'],
+  [2, 'two'],
+  [3, 'three'],
+]);
+
+console.log( [...map2.keys()]); // [1, 2, 3]
+console.log(  [...map2.values()] ); // ['one', 'two', 'three']
+console.log( [...map2.entries()] ); // [[1,'one'], [2, 'two'], [3, 'three']]
+console.log( [...map2]);// [[1,'one'], [2, 'two'], [3, 'three']]
+
+
+// filter map
+let map0 = new Map()
+  .set(1, 'a')
+  .set(2, 'b')
+  .set(3, 'c');
+
+let map1 = new Map(
+  [...map0].filter(([k, v]) => k < 3)
+);
+// 产生Map结构 {1 => 'a', 2 => 'b'}
+
+let map3 = new Map(
+  [...map0].map(([k, v]) => [k * 2, '_' + v])
+    );
+// 产生Map结构 {2 => '_a', 4 => '_b', 6 => '_c'}
+
+
+// forEach
+map.forEach(function(value, key, map) {
+  console.log("Key: %s, Value: %s", key, value);
+});
+
+// 绑定 this  
+var reporter = {
+    report: function(key, value) {
+        console.log("Key: %s, Value: %s", key, value);
+    }
+};
+map.forEach(function(value, key, map) {
+    this.report(key, value);
+}, reporter);
+
+
+
+
+
+</script>
+</body>
+</html>
