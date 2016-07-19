@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reflect对象的方法</title>
+</head>
+<body>
+<script>
+
+var obj = {
+    get foo(){
+        return this.bar();
+    },
+    bar : function (){}
+};
+// 下面语句会让 this.bar()
+// 变成调用 wrapper.bar()
+console.log( Reflect.get(obj, "foo", wrapper) );
+
+</script>
+</body>
+</html>
