@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>数据结构的默认Iterator接口</title>
+</head>
+<body>
+<script>
+
+var arr = ['a', 'b', 'c'];
+let iter = arr[Symbol.iterator]();
+
+console.log(iter.next());   // { value: 'a', done: false }
+console.log(iter.next());   // { value: 'b', done: false }
+console.log(iter.next());   // { value: 'd', done: false }
+console.log(iter.next());   // { value: undefined, done: true }
+
+// Symbol.iterator的属性上部署遍历器生成方法（原型链上的对象具有该方法也可）
+class RangeIterator{
+    constructor(start, stop){
+        this.value = start;
+        this.stop = stop;
+    }
+
+    [Symbol.iterator](){return this;}
+
+    next(){
+        var value = this.value;
+        if(value < this.stop){
+            this.value++;
+            return {done : false, value : value}
+        }else{
+            return {done : true, value : undefined}
+        }
+    }
+}
+
+function range(start, stop){
+    return new RangeIterator(start, stop);
+}
+
+for(var value of range(0, 3)){
+    console.log(value);
+}
+
+
+// 通过遍历器实现指针结构的例子
+function Obj(value){
+    this.value = value;
+    this.next = null;
+}
+
+Obj.prototype[Symbol.iterator] = function (){
+    var iterator = {
+        next : next
+    }
+
+    var current = this;
+
+    function next(){
+        if(current){
+            var value = current.value;
+            current = current.next;
+            return {
+                done : false,
+                value : value
+            }
+        }else{
+            return {
+                done : true
+            }
+        }
+    }
+    return iterator;
+}
+
+var one = new Obj(1);
+var two = new Obj(2);
+var three = new Obj(3);
+
+one.next = two;
+two.next = three;
+
+for (var i of one){
+  console.log(i);
+}
+
+// 为对象添加 iterator
+let obj2 = {
+    data : ['hello', 'world'],
+    [Symbol.iterator] (){
+        const self = this;
+        let index = 0;
+
+        return {
+            next (){
+                if(index < self.data.length){
+                    return {
+                        value : self.data[index++],
+                        done : false
+                    }
+                }else{
+                    return {value:undefined, done : true}
+                }
+            }
+        }
+    }
+}
+
+//
+/**
+NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+// 或者
+NodeList.prototype[Symbol.iterator] = [][Symbol.iterator];
+
+[...document.querySelectorAll('div')] // 可以执行了
+*/
+
+// 类似数组的对象调用数组的Symbol.iterator方法
+let iterable = {
+
+    // 普通对象部署数组的Symbol.iterator方法，并无效果
+    /**
+     * a : 'a',
+     * b : 'b',
+     * c : 'c'  
+     * // 遍历时返回 undefined
+     */
+    0 : 'a',
+    1 : 'b',
+    2 : 'c',
+    length : 3,
+    [Symbol.iterator] : Array.prototype[Symbol.iterator]
+}
+
+for(let value of iterable){
+    console.log(value); // a b c
+}
+
+
+var objk = {};
+objk[Symbol.iterator] = () => 1;
+// console.log([...objk]);  // typeerror
+
+// 用while循环遍历
+var $iterator = ITERABLE[Symbol.iterator]();
+var $result = $iterator.next();
+
+while(!$result.done){
+    var x = $result.value;
+    // ...
+    $result = $iterator.next();
+}
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
