@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>字符串的Iterator接口</title>
+</head>
+<body>
+<script>
+
+var someString = "hi";
+console.log(typeof someString[Symbol.iterator]);    // function 
+
+var iterator = someString[Symbol.iterator]();
+
+console.log( iterator.next()); // { value: "h", done: false }
+console.log( iterator.next());  // { value: "i", done: false }
+console.log( iterator.next());  // { value: undefined, done: true }
+
+
+// 可以覆盖原生的Symbol.iterator方法
+var str = new String('hi');
+console.log([...str]); // ['h', 'i']
+
+str[Symbol.iterator] = function (){
+    return {
+        next : function (){
+            if(this._first){
+                this._first = false;
+                return {value : 'bye', done : false};
+            }else{
+                return { done : true};
+            }
+        },
+        _first : true
+    }
+};
+console.log([...str])  // ['bye']
+console.log(str);       // hi
+
+
+</script>
+</body>
+</html>
