@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Iterator 遍历器</title>
+</head>
+<body>
+<script>
+var it = makeItreator(['a', 'b']);
+console.log(it.next());
+console.log(it.next());
+console.log(it.next());
+
+function makeItreator(array){
+    var nextIndex = 0;
+
+    return {
+        next : function (){
+            return nextIndex < array.length ? 
+            { value : array[nextIndex++], done : false} :
+            { value : undefined, done : true}
+        }
+        /**
+         * 简写
+         * return nextIndex < array.length ?
+                {value: array[nextIndex++]} :
+                {done: true};
+            }
+         */
+    }
+};
+
+var its = idmark();
+
+console.log(its.next().value);
+console.log(its.next().value);
+console.log(its.next().value);
+
+function idmark(){
+    var index_next = 0;
+
+    return {
+        next : function (){
+            return {value : index_next++, done : false};
+        }
+    }
+}
+
+
+
+
+</script>
+</body>
+</html>
