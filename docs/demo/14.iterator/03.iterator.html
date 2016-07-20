@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>调用Iterator接口的场合</title>
+</head>
+<body>
+<script>
+
+// 1.解构赋值
+let set = new Set().add('a').add('b').add('c');
+let [x,y] = set;
+console.log(x,y);               // a b
+let [first, ...rest] = set;
+console.log(first, rest)        // a ["b", "c"]
+
+// 2. 扩展运算符
+let str = 'hello';
+console.log([...str]);          // ["h", "e", "l", "l", "o"]
+let arr = ['a', 'c'];
+console.log(['a', ...arr, 'b']);    // ["a", "a", "c", "b"]
+
+// 3. yield*
+let generator = function* (){
+    yield 1;
+    yield* [2,3,4];
+    yield 5;
+}
+
+var iterator = generator();
+console.log(iterator.next());   // Object {value: 1, done: false}
+console.log(iterator.next());   // Object {value: 2, done: false}
+console.log(iterator.next());   // Object {value: 3, done: false}
+console.log(iterator.next());   // Object {value: 4, done: false}
+console.log(iterator.next());   // Object {value: 5, done: false}
+console.log(iterator.next());   // Object {value: undefined, done: true}
+
+
+</script>
+</body>
+</html>
