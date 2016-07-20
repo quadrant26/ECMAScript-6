@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>遍历器对象的return()，throw()</title>
+</head>
+<body>
+<script>
+
+function readLinesSync(file){
+    return {
+        next(){
+            if(file.isAtEndOfFile()){
+                file.close();
+                return { done : true};
+            }
+        },
+        return (){
+            file.close();
+            return {done : true};
+        },
+    }
+}
+
+for (let line of readLinesSync(fileName)) {
+    console.log(x);
+    break;
+}
+
+</script>
+</body>
+</html>
