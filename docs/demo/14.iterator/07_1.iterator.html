@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>for...of循环 Array</title>
+</head>
+<body>
+<script>
+
+// 数组
+const arr = ['red', 'green', 'blue'];
+let iterator = arr[Symbol.iterator]();
+
+for(let x of arr){
+    console.log(x);     // red green blue
+}
+
+for(let v of iterator){
+    console.log(v);     // red green blue
+}
+
+// for...of循环可以代替数组实例的forEach方法
+arr.forEach(function (element, index){
+    console.log(element, index); // (red 0) (green 1) (blue 2)
+})
+
+// for..in 只能获取键名
+for(let x in arr){
+    console.log(x);
+}
+
+for(var x of arr){
+    console.log(x);
+}
+
+arr.foo = 'hello';
+
+for (let i in arr) {
+  console.log(i); // "0", "1", "2", "foo"
+}
+
+for (let i of arr) {
+  console.log(i); //  red green blue
+}
+
+
+</script>
+</body>
+</html>
