@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generator Generator.prototype.throw()</title>
+</head>
+<body>
+<script>
+
+var g = function * (){
+    try{
+        yield;
+    }catch(e){
+        console.log('内部捕获',e);
+    }
+}
+var i = g();
+console.log(i.next());
+
+try{
+    i.throw('a');
+    i.throw('b');
+}catch(e){
+    // 由于Generator函数内部的catch语句已经执行过了，不会再捕捉到这个错误了，所以这个错误就被抛出了Generator函数体，被函数体外的catch语句捕获
+    console.log('外部捕获',e);
+}
+
+// throw方法可以接受一个参数，该参数会被catch语句接收，建议抛出Error对象的实例
+//不要混淆遍历器对象的throw方法和全局的throw命令。上面代码的错误，是用遍历器对象的throw方法抛出的，而不是用throw命令抛出的。后者只能被函数体外的catch语句捕获
+//console.log(i.throw(new Error('出错了！')));
+
+var g1 = function * (){
+    while(true){
+        try{
+            yield;
+        }catch(e){
+            if( e != 'a') throw e;
+            console.log("内部捕获",e);
+        }
+    }
+}
+
+var i1 = g1();
+console.log(i1.next());
+
+try{
+    throw new Error('a');
+    throw new Error('b');
+}catch(e){
+    console.log('外部捕获',e);
+}
+
+// 如果Generator函数内部没有部署try...catch代码块，那么throw方法抛出的错误，将被外部try...catch代码块捕获
+var g3 = function* () {
+  while (true) {
+    yield;
+    console.log('内部捕获', e);
+  }
+};
+
+var i3 = g3();
+i3.next();
+
+try {
+  i3.throw('a');
+  i3.throw('b');
+} catch (e) {
+  console.log('外部捕获', e);
+}
+// 外部捕获 a
+
+// 如果Generator函数内部和外部，都没有部署try...catch代码块，那么程序将报错，直接中断执行
+var gen = function* gen(){
+  yield console.log('hello');
+  yield console.log('world');
+}
+
+var g = gen();
+console.log(g.next());
+//console.log(g.throw());
+// hello
+// Uncaught undefined
+
+
+// throw方法被捕获以后，会附带执行下一条yield语句。也就是说，会附带执行一次next方法
+var gen = function* gen(){
+  try {
+    yield console.log('a');
+  } catch (e) {
+    // ...
+  }
+  yield console.log('b');
+  yield console.log('c');
+}
+
+var g = gen();
+console.log( g.next()); // a
+console.log( g.throw()); // b
+console.log( g.next()); // c
+
+// throw命令与g.throw方法是无关的，两者互不影响
+var gen = function* gen(){
+  yield console.log('hello');
+  yield console.log('world');
+}
+
+var g = gen();
+g.next();
+
+try {
+  throw new Error();
+} catch (e) {
+  g.next();
+}
+// hello
+// world
+
+
+// 一旦Generator执行过程中抛出错误，且没有被内部捕获，就不会再执行下去了。如果此后还调用next方法，将返回一个value属性等于undefined、done属性等于true的对象，即JavaScript引擎认为这个Generator已经运行结束了
+function* g() {
+  yield 1;
+  console.log('throwing an exception');
+  throw new Error('generator broke!');
+  yield 2;
+  yield 3;
+}
+
+function log(generator) {
+  var v;
+  console.log('starting generator');
+  try {
+    v = generator.next();
+    console.log('第一次运行next方法', v);
+  } catch (err) {
+    console.log('捕捉错误', v);
+  }
+  try {
+    v = generator.next();
+    console.log('第二次运行next方法', v);
+  } catch (err) {
+    console.log('捕捉错误', v);
+  }
+  try {
+    v = generator.next();
+    console.log('第三次运行next方法', v);
+  } catch (err) {
+    console.log('捕捉错误', v);
+  }
+  console.log('caller done');
+}
+
+log(g());
+// starting generator
+// 第一次运行next方法 { value: 1, done: false }
+// throwing an exception
+// 捕捉错误 { value: 1, done: false }
+// 第三次运行next方法 { value: undefined, done: true }
+// caller done
+
+</script>
+</body>
+</html>
