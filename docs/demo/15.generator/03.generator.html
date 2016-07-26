@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generator for...of</title>
+</head>
+<body>
+<script>
+
+function* foo(){
+    yield 1;
+    yield 2;
+    yield 3;
+    yield 4;
+    yield 5;
+    return 6;
+}
+
+for(let v of foo()){
+    console.log(v);    // 1,2,3,4,5
+}
+
+function * fibonacci(){
+    let [prev, curr] =     [0,1];
+    for(;;){
+        [prev,curr] = [curr, prev+curr];
+        yield curr;
+    }
+}
+for(let n of fibonacci()){
+    if(n > 1000)break;
+    console.log(n);
+}
+
+function * numbers(){
+    yield 1;
+    yield 2;
+    return 3;
+    yield 4;
+}
+
+console.log([...numbers()]);           // [1,2]
+console.log(Array.from(numbers()));    // [1 2]
+let [x,y] = numbers();
+console.log(x,y);                      // 1 2
+
+for(let n of numbers()){
+    console.log(n);                    // 1 2
+}
+
+
+function * objectEntries(obj){
+    let propKeys = Reflect.ownKeys(obj);
+
+    for(let propKey of propKeys){
+        yield [propKey, obj[propKey]];
+    };
+}
+
+let jane = {first:'Jane', last:'Doe'};
+for(let [key, value] of objectEntries(jane)){
+    console.log(`${key}, ${value}`);
+    // first jane
+    // last Doe
+}
+
+/*
+function* objectEntries() {
+  let propKeys = Object.keys(this);
+
+  for (let propKey of propKeys) {
+    yield [propKey, this[propKey]];
+  }
+}
+
+jane[Symbol.iterator] = objectEntries;
+
+for (let [key, value] of jane) {
+  console.log(`${key}: ${value}`);
+}
+*/
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
