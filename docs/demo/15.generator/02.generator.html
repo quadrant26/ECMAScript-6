@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generator next方法的参数</title>
+</head>
+<body>
+<script>
+
+function * f(){
+    for(var i = 0; true; i++){
+        var reset = yield i;
+        if(reset){i = -2};
+    }
+}
+var g = f();
+console.log(g.next());        // {value: 0, done: false}
+console.log(g.next());        // {value: 1, done: false}
+// 如果next方法没有参数，每次运行到yield语句，变量reset的值总是undefined。当next方法带一个参数true时，当前的变量reset就被重置为这个参数（即true），因此i会等于-1，下一轮循环就会从-1开始递增
+console.log(g.next(true));    // {value: -1, done: false}
+console.log(g.next());    // {value: 0, done: false}
+
+
+function* foo(x){
+    var y = 2 * (yield (x+1));
+    var z = yield (y/3);
+    return (x+y+z);
+}
+
+var a = foo(5);
+//第二次运行next方法的时候不带参数，导致y的值等于2 * undefined（即NaN），除以3以后还是NaN，因此返回对象的value属性也等于NaN。第三次运行Next方法的时候不带参数，所以z等于undefined，返回对象的value属性等于5 + NaN + undefined，即NaN
+console.log(a.next());    // {value: 6, done: false}
+console.log(a.next());    // {value: NaN, done: false}
+console.log(a.next());    // {value: NaN, done: true}
+
+var b = foo(5);
+//
+console.log(b.next());      // {value: 6, done: false}
+console.log(b.next(12));    // {value: 8, done: false}
+console.log(b.next(13));    // {value: 42, done: true}
+
+// 想要第一次调用next方法时，就能够输入值，可以在Generator函数外面再包一层
+function warpper(generatorFunction){
+    return function (...args) {
+        let generatorObject = generatorFunction(...args);
+        generatorObject.next();
+        return generatorObject;
+    }
+}
+const warpped = warpper(function *(){
+    console.log(`First input : ${yield}`);
+    return 'DONE';
+});
+console.log(warpped().next('hello'));    // Object {value: "DONE", done: true}
+
+
+function *dataConsumer(){
+    console.log('Started');
+    console.log(`1, ${yield}`);
+    console.log(`2, ${yield}`);
+    return 'result';
+}
+
+let genObj = dataConsumer();
+console.log(genObj.next());       // Started
+console.log(genObj.next('a'));    // 1, b
+console.log(genObj.next('b'));    // 2, b Object {value: "result", done: true}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
