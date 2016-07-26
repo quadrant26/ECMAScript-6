@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generator yield*语句</title>
+</head>
+<body>
+<script>
+// 如果在Generater函数内部，调用另一个Generator函数，默认情况下是没有效果的
+function * foo(){
+    yield 'a';
+    yield 'b';
+}
+
+function* bar(){
+    yield 'x';
+    foo();
+    yield 'y';
+}
+
+for(let f of bar()){
+    console.log(f);
+}
+
+function * bar2(){
+    yield 'x';
+    yield* foo();
+    yield 'y';
+}
+
+//  等同于
+/**
+function * bar2(){
+    yield 'x';
+    yield 'a';
+    yield 'b';
+    yield 'y';
+}
+
+function * bar2(){
+    yield 'x';
+    for(var f of foo()){
+        yiled f;
+    };
+    yield 'y';
+}
+*/
+
+for(let f of bar2()){
+    console.log(f);
+}
+
+// example
+function* inner() {
+  yield 'hello!';
+}
+
+function* outer1() {
+  yield 'open';
+  yield inner();
+  yield 'close';
+}
+
+var gen = outer1()
+console.log( gen.next().value); // "open"
+console.log( gen.next().value); // 返回一个遍历器对象
+console.log( gen.next().value); // "close"
+
+function* outer2() {
+  yield 'open'
+  yield* inner()
+  yield 'close'
+}
+
+var gen = outer2()
+console.log( gen.next().value); // "open"
+console.log( gen.next().value); // "hello!"
+console.log( gen.next().value); // "close"
+
+function* concat(iter1, iter2) {
+  yield* iter1;
+  yield* iter2;
+}
+// 等同于
+/*
+// yield*后面的Generator函数（没有return语句时），等同于在Generator函数内部，部署一个for...of循环
+function* concat(iter1, iter2) {
+  for (var value of iter1) {
+    yield value;
+  }
+  for (var value of iter2) {
+    yield value;
+  }
+}
+*/
+
+// 任何数据结构只要有Iterator接口，就可以被yield*遍历
+let read = (function* () {
+  yield 'hello';
+  yield* 'hello';
+})();
+
+console.log(read.next().value); // "hello"
+console.log(read.next().value); // "h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
