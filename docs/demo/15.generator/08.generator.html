@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generator Generator函数的this</title>
+</head>
+<body>
+<script>
+
+function* g() {}
+
+g.prototype.hello = function () {
+  return 'hi!';
+};
+
+let obj = g();
+
+console.log( obj instanceof g); // true
+console.log( obj.hello()); // 'hi!'
+
+// 如果把g当作普通的构造函数，并不会生效，因为g返回的总是遍历器对象，而不是this对象
+function * g1(){
+    this.a = 12;
+}
+let obj2 = g1();
+console.log(g1.a);  //undefined
+
+// Generator函数也不能跟new命令一起用，会报错
+function* F() {
+  yield this.x = 2;
+  yield this.y = 3;
+}
+// new F()
+// TypeError: F is not a constructor
+
+// 下面是一个变通方法。首先，生成一个空对象，使用bind方法绑定Generator函数内部的this。这样，构造函数调用以后，这个空对象就是Generator函数的实例对象了
+function* F() {
+  this.a = 1;
+  yield this.b = 2;
+  yield this.c = 3;
+}
+var obj = {};
+var f = F.call(obj);
+
+/**
+1. var f = F.call(obj.prototype);
+
+2. function F(){
+    return fn.call(obj.prototype)
+}
+*/
+
+f.next();  // Object {value: 2, done: false}
+f.next();  // Object {value: 3, done: false}
+f.next();  // Object {value: undefined, done: true}
+
+obj.a // 1
+obj.b // 2
+obj.c // 3
+
+//
+function* gen() {
+  this.a = 1;
+  yield this.b = 2;
+  yield this.c = 3;
+}
+
+function F() {
+  return gen.call(gen.prototype);
+}
+
+var f = new F();
+
+f.next();  // Object {value: 2, done: false}
+f.next();  // Object {value: 3, done: false}
+f.next();  // Object {value: undefined, done: true}
+
+f.a // 1
+f.b // 2
+f.c // 3
+
+
+
+</script>
+</body>
+</html>
