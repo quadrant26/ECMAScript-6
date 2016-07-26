@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generator Generator.prototype.return()</title>
+</head>
+<body>
+<script>
+
+// Generator函数返回的遍历器对象，还有一个return方法，可以返回给定的值，并且终结遍历Generator函数
+function * gen(){
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+var g = gen();
+console.log(g.next());        // Object {value: 1, done: false}
+console.log(g.return('foo'));    // Object {value: "foo", done: true}
+console.log(g.next());        //Object {value: undefined, done: true}
+
+var g2 = gen();
+console.log(g2.next());        // Object {value: 1, done: false}
+// return方法调用时，不提供参数，则返回值的value属性为undefined
+console.log(g2.return());    // Object {value: undefined, done: true}
+
+
+function* numbers () {
+  yield 1;
+  try {
+    yield 2;
+    yield 3;
+  } finally {
+    yield 4;
+    yield 5;
+  }
+  yield 6;
+}
+var g = numbers()
+console.log(g.next()); // { done: false, value: 1 }
+console.log(g.next()); // { done: false, value: 2 }
+// 如果Generator函数内部有try...finally代码块，那么return方法会推迟到finally代码块执行完再执行
+console.log(g.return(7)); // { done: false, value: 4 }
+console.log(g.next()); // { done: false, value: 5 }
+console.log(g.next()); // { done: true, value: 7 }
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
