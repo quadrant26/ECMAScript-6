@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TypedArray 对象</title>
+</head>
+<body>
+<script>
+
+// 2.2.1 TypedArray(buffer, byteOffset=0, length?)
+// 创建一个8字节的ArrayBuffer
+var b = new ArrayBuffer(8);
+
+// 创建一个指向b的Int32视图，开始于字节0，直到缓冲区的末尾
+var v1 = new Int32Array(b);
+
+// 创建一个指向b的Uint8视图，开始于字节2，直到缓冲区的末尾
+var v2 = new Uint8Array(b, 2);
+
+// 创建一个指向b的Int16视图，开始于字节2，长度为2
+var v3 = new Int16Array(b, 2, 2);
+
+
+// 2.2.2 TypedArray(length)
+var f64a = new Float64Array(8);
+f64a[0] = 10;
+f64a[1] = 20;
+f64a[2] = f64a[0] + f64a[1];
+
+//2.2.3 TypedArray(typedArray)
+var typedArray = new Int8Array(new Uint8Array(4));
+
+// 2.2.4 TypedArray(arrayLikeObject)
+var typedArray = new Uint8Array([1, 2, 3, 4]);
+
+// 2.3 
+// TypedArray数组没有concat方法。如果想要合并多个TypedArray数组
+function concatenate(resultConstructor, ...arrays) {
+  let totalLength = 0;
+  for (let arr of arrays) {
+    totalLength += arr.length;
+  }
+  let result = new resultConstructor(totalLength);
+  let offset = 0;
+  for (let arr of arrays) {
+    result.set(arr, offset);
+    offset += arr.length;
+  }
+  return result;
+}
+
+concatenate(Uint8Array, Uint8Array.of(1, 2), Uint8Array.of(3, 4))
+// Uint8Array [1, 2, 3, 4]
+
+
+// 2.4 字节序
+var buffer = new ArrayBuffer(16);
+var int32View = new Int32Array(buffer);
+
+for (var i = 0; i < int32View.length; i++) {
+  int32View[i] = i * 2;
+}
+
+var int16View = new Int16Array(buffer);
+
+for (var i = 0; i < int16View.length; i++) {
+  console.log("Entry " + i + ": " + int16View[i]);
+}
+
+// ArrayBuffer与字符串的互相转换
+// // ArrayBuffer转为字符串，参数为ArrayBuffer对象
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint16Array(buf));
+}
+
+// 字符串转为ArrayBuffer对象，参数为字符串
+function str2ab(str) {
+  var buf = new ArrayBuffer(str.length * 2); // 每个字符占用2个字节
+  var bufView = new Uint16Array(buf);
+  for (var i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+
+// 溢出
+var int8 = new Int8Array(1);
+
+int8[0] = 128;
+int8[0] // -128
+
+int8[0] = -129;
+int8[0] // 127
+
+// TypedArray.prototype.buffer
+var a = new Float32Array(64);
+var b = new Uint8Array(a.buffer);
+
+// TypedArray.prototype.byteLength，TypedArray.prototype.byteOffset
+var b = new ArrayBuffer(8);
+
+var v1 = new Int32Array(b);
+var v2 = new Uint8Array(b, 2);
+var v3 = new Int16Array(b, 2, 2);
+
+v1.byteLength // 8
+v2.byteLength // 6
+v3.byteLength // 4
+
+v1.byteOffset // 0
+v2.byteOffset // 2
+v3.byteOffset // 2
+
+//TypedArray.prototype.length
+var a = new Int16Array(8);
+
+a.length // 8
+a.byteLength // 16
+
+
+// TypedArray.prototype.set()
+var a = new Uint8Array(8);
+var b = new Uint8Array(8);
+
+b.set(a);
+
+
+// TypedArray.prototype.subarray()
+var a = new Uint16Array(8);
+var b = a.subarray(2,3);
+
+a.byteLength // 16
+b.byteLength // 2
+
+// TypedArray.prototype.slice()
+let ui8 = Uint8Array.of(0, 1, 2);
+ui8.slice(-1)
+// Uint8Array [ 2 ]
+
+// TypedArray.of()
+Float32Array.of(0.151, -8, 3.7)
+// Float32Array [ 0.151, -8, 3.7 ]
+// 方法一
+let tarr = new Uint8Array([1,2,3]);
+
+// 方法二
+let tarr = Uint8Array.of(1,2,3);
+
+// 方法三
+let tarr = new Uint8Array(3);
+tarr[0] = 0;
+tarr[1] = 1;
+tarr[2] = 2;
+
+//  TypedArray.from()
+Uint16Array.from([0, 1, 2])
+
+Int8Array.of(127, 126, 125).map(x => 2 * x)
+// Int8Array [ -2, -4, -6 ]
+
+Int16Array.from(Int8Array.of(127, 126, 125), x => 2 * x)
+// Int16Array [ 254, 252, 250 ]
+
+
+
+</script>
+</body>
+</html>
