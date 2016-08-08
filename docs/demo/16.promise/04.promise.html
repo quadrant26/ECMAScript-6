@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise Promise.prototype.catch()</title>
+</head>
+<body>
+<script>
+// ajax
+var getJSON = function (url){
+    var promise = new Promise(function(resolve, reject){
+        var client = new XMLHttpRequest();
+        client.open('get', url);
+        client.onreadystatechange = handler;
+        client.responseType = 'json';
+        client.setRequestHeader("Accept", "application/json");
+        client.send();
+
+        function handler(){
+            if(this.readyState != 4){
+                return;
+            }
+            
+            if(this.status === 200){
+                //console.log(this.responseText);
+                resolve(this.response);
+            }else{
+                reject(new Error(this.statusText));
+            }
+        }
+    });
+
+    return promise;
+};
+
+// /new/ECMAscript-6/docs/demo/16.promise/posts.json
+
+// 生成一个 Promise 的数组对象
+var promise = [2, 3, 5, 7, 11, 13].map(function (id){
+    return getJSON("/post/" + id + ".json");
+})
+
+Promise.all(promise.then(function (posts))).catch(function (reason){
+    // promises是包含6个Promise实例的数组，只有这6个实例的状态都变成fulfilled，或者其中有一个变为rejected，才会调用Promise.all方法后面的回调函数
+});
+
+const databasePromise = connectDatabase();
+
+const booksPromise = databaseProimse
+  .then(findAllBooks);
+
+const userPromise = databasePromise
+  .then(getCurrentUser);
+
+Promise.all([
+  booksPromise,
+  userPromise
+])
+.then(([books, user]) => pickTopRecommentations(books, user));
+
+
+
+
+
+</script>
+</body>
+</html>
