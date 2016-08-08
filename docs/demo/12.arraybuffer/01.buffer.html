@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ArrayBuffer对象</title>
+</head>
+<body>
+<script>
+
+var buf = new ArrayBuffer(32);
+
+var dataview = new DataView(buf);
+console.log(dataview.getUint8(0));
+
+// 分别建立两种视图：32位带符号整数（Int32Array构造函数）和8位不带符号整数（Uint8Array构造函数）。由于两个视图对应的是同一段内存，一个视图修改底层内存，会影响到另一个视图
+var buf1 = new ArrayBuffer(12);
+var x1 = new Int32Array(buf1);
+x1[0] = 1;
+var x2 = new Uint8Array(buf1);
+x2[0] = 2;
+console.log(x1[0]);
+
+// TypedArray视图的构造函数，除了接受ArrayBuffer实例作为参数，还可以接受普通数组作为参数，直接分配内存生成底层的ArrayBuffer实例，并同时完成对这段内存的赋值。
+var typedArray = new Uint8Array([0,1,2]);
+console.log(typedArray.length);
+typedArray[0] = 5;
+console.log(typedArray);
+
+// ArrayBuffer.prototype.byteLength 
+var buffer = new ArrayBuffer(32);
+console.log(buffer.byteLength);
+
+//如果要分配的内存区域很大，有可能分配失败（因为没有那么多的连续空余内存），所以有必要检查是否分配成功。
+if (buffer.byteLength === n) {
+  // 成功
+} else {
+  // 失败
+}
+
+
+// ArrayBuffer.prototype.slice()
+var buffer = new ArrayBuffer(8);
+var newBuffer = buffer.slice(0, 3);
+
+// ArrayBuffer.isView()
+var buffer = new ArrayBuffer(8);
+ArrayBuffer.isView(buffer) // false
+
+var v = new Int32Array(buffer);
+ArrayBuffer.isView(v) // true
+
+</script>
+</body>
+</html>
