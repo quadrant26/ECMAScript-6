@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>thunk()</title>
+</head>
+<body>
+<script>
+
+function f(m){
+    console.log(m);
+    return m * 2;
+}
+
+console.log( f(3 + 5) );
+
+/*
+var thunk = function (){
+    return x + 5;
+}
+
+function f1(thunk){
+    return thunk()*2;
+}
+*/
+
+// ES6版本
+var Thunk = function(fn) {
+  return function (...args) {
+    return function (callback) {
+      return fn.call(this, ...args, callback);
+    }
+  };
+};
+
+function f2(a, cb) {
+    cb(a);
+}
+let ft = Thunk(f2);
+
+let log = console.log.bind(console);
+ft(1)(log) // 1
+
+
+
+function thunkify(fn){
+  return function(){
+    var args = new Array(arguments.length);
+    var ctx = this;
+
+    //console.log(this);
+
+    for(var i = 0; i < args.length; ++i) {
+      args[i] = arguments[i];
+    }
+
+    return function(done){
+      var called;
+
+      args.push(function(){
+        if (called) return;
+        called = true;
+        done.apply(null, arguments);
+      });
+
+      try {
+        fn.apply(ctx, args);
+      } catch (err) {
+        done(err);
+      }
+    }
+  }
+};
+
+function f3(a, b, callback){
+  var sum = a + b;
+  callback(sum);
+  callback(sum);
+}
+
+var ft2 = thunkify(f3);
+var print = console.log.bind(console);
+ft2(1, 2)(print);
+// 3
+</script>
+</body>
+</html>
