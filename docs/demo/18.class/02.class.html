@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Class extends</title>
+</head>
+<body>
+<script>
+
+class A {
+}
+
+class B extends A {
+}
+
+console.log(B.__proto__ === A); // true
+console.log(B.prototype.__proto__ === A.prototype); // true
+
+class A {
+
+}
+
+class B {
+
+}
+
+// B的实例继承A的实例
+Object.setPrototypeOf(B.prototype, A.prototype);
+
+// B继承A的静态属性
+Object.setPrototypeOf(B, A);
+
+Object.setPrototypeOf = function (obj, proto) {
+  obj.__proto__ = proto;
+  return obj;
+}
+
+
+// 2.3.1 子类继承Object类
+        
+class AA extends Object {
+}
+
+console.log(AA.__proto__ === Object); // true
+console.log(AA.prototype.__proto__ === Object.prototype); // true
+
+// 2.3.2 不存在任何继承
+class AAA {
+}
+
+console.log(AAA.__proto__ === Function.prototype); // true
+console.log(AAA.prototype.__proto__ === Object.prototype); // true
+
+// 2.3.3 子类继承null
+
+class AAAA extends null {
+}
+
+console.log(AAAA.__proto__ === Function.prototype); // true
+console.log(AAAA.prototype.__proto__ === undefined); // true
+
+</script>
+</body>
+</html>
