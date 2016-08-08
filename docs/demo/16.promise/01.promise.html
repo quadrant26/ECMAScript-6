@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise 基本用法</title>
+</head>
+<body>
+<script>
+
+/**
+var parmise = new Promise(function (resolve, reject){
+    // 
+    if(//异步操作成功 ){
+        resolve(value);
+    }else{
+        resolve(error);
+    }
+});
+
+promise.then(function (value){
+    // success
+}, function (error){
+    // error
+})
+ */
+
+function timeout (ms){
+    return new Promise((resolve,reject) => {
+        setTimeout(resolve, ms, 'done');
+    })
+}
+
+timeout(100).then((value)=>{
+    console.log(value);
+})
+
+// Promise新建后立即执行，所以首先输出的是“Promise”。然后，then方法指定的回调函数，将在当前脚本所有同步任务执行完才会执行，所以“Resolved”最后输出
+var promise1 = new Promise(function (resolve, reject){
+    console.log('Promise');
+    //console.log(resolve);
+    resolve();
+})
+promise1.then(function(){
+    console.log("Resolve.");
+})
+console.log("Hi");
+
+// 异步加载图片
+function loadImgAsync(url){
+    return new Promise(function (resolve, reject){
+        var image = new Image();
+
+        image.onload = function (){
+            resolve(image);
+        };
+
+        image.onerror = function (){
+            reject(new Error('Could not load image at ' + url));
+        };
+
+        image.src = url;
+    })
+};
+
+// ajax
+var getJSON = function (url){
+    var promise = new Promise(function(resolve, reject){
+        var client = new XMLHttpRequest();
+        client.open('get', url);
+        client.onreadystatechange = handler;
+        client.responseType = 'json';
+        client.setRequestHeader("Accept", "application/json");
+        client.send();
+
+        function handler(){
+            if(this.readyState != 4){
+                return;
+            }
+            
+            if(this.status === 200){
+                //console.log(this.responseText);
+                resolve(this.response);
+            }else{
+                reject(new Error(this.statusText));
+            }
+        }
+    });
+
+    return promise;
+};
+
+getJSON("/new/ECMAscript-6/docs/demo/16.promise/posts.json").then(function (json){
+    console.log('resolve: ' + json);
+}, function (error){
+    console.log('reject: ' + error);
+});
+
+
+var p1 = new Promise(function (resolve, reject) {
+  setTimeout(() => reject(new Error('fail')), 3000)
+})
+
+var p2 = new Promise(function (resolve, reject) {
+  setTimeout(() => resolve(p1), 1000)
+})
+
+p2.then(result => console.log(result))
+  .catch(error => console.log(error))
+// Error: fail
+
+</script>
+</body>
+</html>
