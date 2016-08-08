@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Class 静态方法</title>
+</head>
+<body>
+<script>
+
+class Foo {
+  static classMethod() {
+    return 'hello';
+  }
+}
+
+console.log( Foo.classMethod()); // 'hello'
+
+var foo = new Foo();
+//console.log(foo.classMethod());
+// TypeError: foo.classMethod is not a function
+
+class Bar extends Foo{
+
+}
+// 父类的静态方法，可以被子类继承
+console.log(Bar.classMethod());
+
+class Bar2 extends Foo {
+  static classMethod() {
+    return super.classMethod() + ', too';
+  }
+}
+// 父类的静态方法，可以被子类继承
+console.log(Bar2.classMethod());
+
+</script>
+</body>
+</html>
