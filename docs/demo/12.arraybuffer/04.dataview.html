@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TypedArray dataview</title>
+</head>
+<body>
+<script>
+
+var buffer = new ArrayBuffer(24);
+var dv = new DataView(buffer);
+
+// 从第1个字节读取一个8位无符号整数
+var v1 = dv.getUint8(0);
+
+// 从第2个字节读取一个16位无符号整数
+var v2 = dv.getUint16(1);
+
+// 从第4个字节读取一个16位无符号整数
+var v3 = dv.getUint16(3);
+
+// 如果一次读取两个或两个以上字节，就必须明确数据的存储方式，到底是小端字节序还是大端字节序。默认情况下，DataView的get方法使用大端字节序解读数据，如果需要使用小端字节序解读，必须在get方法的第二个参数指定true
+// 小端字节序
+var v1 = dv.getUint16(1, true);
+
+// 大端字节序
+var v2 = dv.getUint16(3, false);
+
+// 大端字节序
+var v3 = dv.getUint16(3);
+
+
+// set 
+// 在第1个字节，以大端字节序写入值为25的32位整数
+dv.setInt32(0, 25, false);
+
+// 在第5个字节，以大端字节序写入值为25的32位整数
+dv.setInt32(4, 25);
+
+// 在第9个字节，以小端字节序写入值为2.5的32位浮点数
+dv.setFloat32(8, 2.5, true);
+
+
+// 如果返回true，就是小端字节序；如果返回false，就是大端字节序
+var littleEndian = (function() {
+  var buffer = new ArrayBuffer(2);
+  new DataView(buffer).setInt16(0, 256, true);
+  return new Int16Array(buffer)[0] === 256;
+})()
+
+
+</script>
+</body>
+</html>
