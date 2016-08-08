@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Class 原生构造函数的继承</title>
+</head>
+<body>
+<script>
+
+class VersionedArray extends Array {
+  constructor() {
+    super();
+    this.history = [[]];
+  }
+  commit() {
+    this.history.push(this.slice());
+  }
+  revert() {
+    this.splice(0, this.length, ...this.history[this.history.length - 1]);
+  }
+}
+
+var x = new VersionedArray();
+
+x.push(1);
+x.push(2);
+x // [1, 2]
+x.history // [[]]
+
+x.commit();
+x.history // [[], [1, 2]]
+x.push(3);
+x // [1, 2, 3]
+
+x.revert();
+x // [1, 2]
+
+
+</script>
+</body>
+</html>
