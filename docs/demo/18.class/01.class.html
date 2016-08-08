@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Class</title>
+</head>
+<body>
+<script>
+
+class Point{
+
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+    }
+
+    toString (){
+        return {x : this.x, y : this.y};
+    }
+}
+
+console.log(typeof Point);  // Function
+console.log(Point === Point.prototype.constructor);  // true
+
+console.log(Object.keys(Point.prototype));
+console.log(Object.getOwnPropertyNames(Point.prototype));
+
+var p1 = new Point(2,3);
+var p2 = new Point(3,2);
+
+console.log(p1.__proto__ === p2.__proto__);
+
+p1.__proto__.findname = function (){console.log(this.x);}
+
+p2.findname();
+
+var p3 = new Point(3,4);
+p3.findname();
+
+</script>
+</body>
+</html>
