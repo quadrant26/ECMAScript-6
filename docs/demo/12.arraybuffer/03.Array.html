@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TypedArray 符合视图</title>
+</head>
+<body>
+<script>
+
+var buffer = new ArrayBuffer(24);
+
+var idView = new Uint32Array(buffer, 0, 1);
+var usernameView = new Uint8Array(buffer, 4, 16);
+var amountDueView = new Float32Array(buffer, 20, 1);
+/**
+ * 字节0到字节3：1个32位无符号整数
+字节4到字节19：16个8位整数
+字节20到字节23：1个32位浮点数
+ */
+
+
+</script>
+</body>
+</html>
