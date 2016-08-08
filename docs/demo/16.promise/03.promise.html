@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise Promise.prototype.catch()</title>
+</head>
+<body>
+<script>
+// ajax
+var getJSON = function (url){
+    var promise = new Promise(function(resolve, reject){
+        var client = new XMLHttpRequest();
+        client.open('get', url);
+        client.onreadystatechange = handler;
+        client.responseType = 'json';
+        client.setRequestHeader("Accept", "application/json");
+        client.send();
+
+        function handler(){
+            if(this.readyState != 4){
+                return;
+            }
+            
+            if(this.status === 200){
+                //console.log(this.responseText);
+                resolve(this.response);
+            }else{
+                reject(new Error(this.statusText));
+            }
+        }
+    });
+
+    return promise;
+};
+
+// /new/ECMAscript-6/docs/demo/16.promise/posts.json
+
+getJSON("/new/ECMAscript-6/docs/demo/16.promise/posts.json").then(function(posts) {
+  // ...
+}).catch(function(error) {
+  // 处理 getJSON 和 前一个回调函数运行时发生的错误
+  console.log('发生错误！', error);
+});
+
+
+var promise = new Promise(function(resolve, reject) {
+  throw new Error('test');
+});
+promise.catch(function(error) {
+  console.log(error); // Error('test')
+});
+
+/** 
+ * catch 写法
+// 写法一
+var promise = new Promise(function(resolve, reject) {
+  try {
+    throw new Error('test');
+  } catch(e) {
+    reject(e);
+  }
+});
+promise.catch(function(error) {
+  console.log(error);
+});
+
+// 写法二
+var promise = new Promise(function(resolve, reject) {
+  reject(new Error('test'));
+});
+promise.catch(function(error) {
+  console.log(error);
+});
+ */
+
+var someAsyncThing = function() {
+  return new Promise(function(resolve, reject) {
+    // 下面一行会报错，因为x没有声明
+    resolve(x + 2);
+  });
+};
+
+someAsyncThing().then(function() {
+   console.log('everything is great');
+});
+
+
+var promise = new Promise(function(resolve, reject) {
+  resolve("ok");
+  setTimeout(function() { throw new Error('test') }, 0)
+});
+promise.then(function(value) { console.log(value) });
+// ok
+// Uncaught Error: test
+// 上面代码中，Promise指定在下一轮“事件循环”再抛出错误，结果由于没有指定使用try...catch语句，就冒泡到最外层，成了未捕获的错误。因为此时，Promise的函数体已经运行结束了，所以这个错误是在Promise函数体外抛出的
+
+//
+someAsyncThing().then(function() {
+  return someOtherAsyncThing();
+}).catch(function(error) {
+  console.log('oh no', error);
+  // 下面一行会报错，因为y没有声明
+  y + 2;
+}).catch(function(error) { // 可以继续捕获
+  console.log('carry on', error);
+});
+// oh no [ReferenceError: x is not defined]
+// carry on [ReferenceError: y is not defined]
+</script>
+</body>
+</html>
