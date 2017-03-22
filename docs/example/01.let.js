@@ -6,4 +6,4 @@ if(true){
 }
 
 // error
-cosnole.log(fruit);
+console.log(fruit);
