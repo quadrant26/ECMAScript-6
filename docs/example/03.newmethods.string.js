@@ -7,7 +7,7 @@ let dessert = '🎂',
 let breakfast = `今天的早餐是\n
  ${dessert} 与 ${drink} !`;
 
- cosnole.log(breakfast);
+ console.log(breakfast);
 
  /**
   * startsWith(str)   是否 str 开头
