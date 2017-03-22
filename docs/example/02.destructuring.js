@@ -7,4 +7,4 @@
 
 let [desert, drink, fruit] = breakfast();
 
- cosnole.log(desert, drink, fruit);
+console.log(desert, drink, fruit);
