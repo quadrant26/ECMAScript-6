@@ -14,7 +14,7 @@ var superfast = function super (argument){
 }
 
 
-cosnole.log(
+console.log(
   be.name,
   breakfast.name,
   superfast.name
