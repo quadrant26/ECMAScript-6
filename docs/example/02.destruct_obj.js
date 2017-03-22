@@ -7,4 +7,4 @@
 
 let {desert:desert, drink:drink, fruit:fruit] = breakfast();
 
- cosnole.log(desert, drink, fruit);
+ console.log(desert, drink, fruit);
