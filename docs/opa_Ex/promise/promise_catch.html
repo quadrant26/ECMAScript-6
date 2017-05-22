@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise</title>
+</head>
+<body>
+<script>
+    const imgurl = ""
+    const promise = new Promise(function(resolve, reject){
+        var oImg = new Image();
+        oImg.src = imgurl;
+        oImg.onload = function (){
+            resolve(this)
+        };
+
+        oImg.onerror = function (err){
+            reject(new Error("图片加载错误 ~ ~"))
+        }
+    });
+    console.log(123);
+
+    promise.then(function (img){
+        console.log("加载完成");
+        document.body.appendChild(img);
+    }).catch(function (err){
+        console.log(err)
+    });
+
+    console.log(456);
+</script>
+</body>
+</html>
