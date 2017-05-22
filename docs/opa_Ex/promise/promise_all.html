@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise</title>
+</head>
+<body>
+<script>
+    const imgarr = ["https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2007951569,141911878&fm=23&gp=0.jpg", "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=519986890,3413468118&fm=23&gp=0.jpg", "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1801089691,2806825736&fm=23&gp=0.jpg"];
+
+    function imgload(url){
+        var promise = new Promise(function (resolve, reject){
+            var img = new Image();
+            img.src = url;
+            img.onload = function (){
+                resolve(this);
+            }
+
+            img.onerror = function (){
+                reject(new Error("图片加载失败"))
+            };
+        });
+
+        return promise;
+    };
+    
+    let allDone = Promise.all([imgload(imgarr[0]), imgload(imgarr[1]), imgload(imgarr[2])]);
+
+    allDone.then(function (data){
+        console.log(data);
+
+        data.forEach(function (item, index){
+            document.body.appendChild(item);
+        });
+    }).catch(function (err){
+        console.log(err)
+    });
+
+    
+</script>
+</body>
+</html>
