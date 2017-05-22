@@ -28,3 +28,4 @@ Promise
 
     promise.resolve()
 
+        参数是一个 Promise 实例，将不做任何修改，直接返回这个实例
