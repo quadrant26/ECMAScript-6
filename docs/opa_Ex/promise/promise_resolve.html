@@ -26,9 +26,39 @@
         return promise;
     };
     
-    let pimg = Promise.resolve(imgload(imgarr[0]));
-    pimg.then(function (img){
+    // let pimg = Promise.resolve(imgload(imgarr[0]));
+    // pimg.then(function (img){
+    //     document.body.appendChild(img);
+    // });
+
+    let pimg2 = Promise.resolve({
+        then: function(resolve, reject){
+            var img = new Image();
+            img.src = imgarr[2];
+
+            img.onload = function (){
+                resolve(img);
+            }
+
+            img.onerror = function (){
+                reject(new Error("图片加载失败"))
+            };
+        }
+    });
+
+    console.log(pimg2 instanceof Promise)
+
+    pimg2.then(function (img){
         document.body.appendChild(img);
+    }).catch(function (err){
+        console.log(err)
+    })
+
+
+    let p3 = Promise.resolve("黄河远上白云间").then(function (str){
+        console.log(str);
+    }, function (value){
+        // 不会被调用
     })
 
 
