@@ -28,4 +28,10 @@ Promise
 
     promise.resolve()
 
-        参数是一个 Promise 实例，将不做任何修改，直接返回这个实例
+        1. 参数是一个 Promise 实例，将不做任何修改，直接返回这个实例
+
+        2. 参数是一个 thenable 对象, 返回新的 promise 对象
+
+        3. 参数是一个 基本数据类型， 返回该数据类型的
+
+        4. 参数是一个 空对象， 返回一个 promise 对象
