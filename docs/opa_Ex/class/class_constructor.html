@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Class</title>
+</head>
+<body>
+<script>
+    class Person{
+        constructor(name, job){
+            this.name = name;
+            this.job = job;
+        }
+
+        toString(){
+            console.log(`My name is ${this.name}, and my job is ${this.job}`);
+        }
+
+        set uname(name){
+            this._name = name
+        }
+
+        get uname(){
+            console.log(this._name)
+        }
+    }
+
+    var p1 = new Person("king", "worker");
+    p1.toString();
+
+    p1.uname = 'err'
+    p1.uname;
+    
+</script>
+</body>
+</html>
