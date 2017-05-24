@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Class</title>
+<style>
+*{ margin:0; padding:0;}
+canvas{ box-shadow:2px 7px 17px rgba(0, 0 ,0, .5);}
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+window.onload = function (){
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const w = canvas.width = 600;
+    const h = canvas.height = 400;
+
+    class Ball{
+        constructor(x, y, r){
+            this.x = x;
+            this.y = y;
+            this.r = r;
+            this.color = `rgb(${Ball.randomcolor([55, 255])}, ${Ball.randomcolor([55, 255])}, ${Ball.randomcolor([55, 255])})`;
+        };
+
+        static randomcolor(arr){
+            let max = Math.max(...arr),
+                min = Math.min(...arr)
+            return ~~(Math.random()*(max - min) + min);
+        }
+
+        render(ctx){
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(0, 0, this.r, 0, 2*Math.PI);
+            ctx.fill();
+            ctx.restore();
+            return this;
+        }
+    };
+
+    var ball = new Ball(100, 100, 20);
+    ball.render(ctx);
+}
+</script>
+</body>
+</html>
